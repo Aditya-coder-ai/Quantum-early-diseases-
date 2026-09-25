@@ -1,0 +1,13 @@
+{
+  "input_dim": 30,
+  "target_dims": [
+    4,
+    8
+  ],
+  "results_keys": [
+    "pca_4",
+    "autoencoder_4",
+    "pca_8",
+    "autoencoder_8"
+  ]
+}

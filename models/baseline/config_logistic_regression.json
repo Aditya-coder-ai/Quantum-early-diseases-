@@ -1,0 +1,10 @@
+{
+  "model_name": "Logistic Regression",
+  "hyperparameters": "{'C': 1.0, 'class_weight': 'balanced', 'dual': False, 'fit_intercept': True, 'intercept_scaling': 1, 'l1_ratio': 0.0, 'max_iter': 1000, 'n_jobs': None, 'penalty': 'deprecated', 'random_state': 42, 'solver': 'lbfgs', 'tol': 0.0001, 'verbose': 0, 'warm_start': False}",
+  "feature_count": 30,
+  "random_seed": 42,
+  "class_weights": {
+    "0": 1.3446,
+    "1": 0.796
+  }
+}
