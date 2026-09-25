@@ -1,0 +1,121 @@
+{
+  "imbalance_info": {
+    "imbalance_ratio": 1.689,
+    "class_weights": {
+      "0": 1.3446,
+      "1": 0.796
+    },
+    "train_distribution": {
+      "malignant_0": 148,
+      "benign_1": 250,
+      "total": 398,
+      "pct_malignant": 37.19
+    },
+    "val_distribution": {
+      "malignant_0": 32,
+      "benign_1": 53,
+      "total": 85,
+      "pct_malignant": 37.65
+    },
+    "test_distribution": {
+      "malignant_0": 32,
+      "benign_1": 54,
+      "total": 86,
+      "pct_malignant": 37.21
+    }
+  },
+  "results": [
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.9651,
+      "precision": 0.9811,
+      "recall": 0.963,
+      "specificity": 0.9688,
+      "f1": 0.972,
+      "tp": 52,
+      "fp": 1,
+      "tn": 31,
+      "fn": 2,
+      "false_negative_rate": 0.037,
+      "roc_auc": 0.9954,
+      "pr_auc": 0.9971,
+      "feature_space": "raw_30",
+      "num_features": 30,
+      "num_qubits": 0,
+      "training_time": 0.0274,
+      "inference_time": 0.000557,
+      "random_seed": 42,
+      "val_accuracy": 0.9765,
+      "val_f1": 0.9808
+    },
+    {
+      "model": "SVM (RBF)",
+      "accuracy": 0.9767,
+      "precision": 0.9815,
+      "recall": 0.9815,
+      "specificity": 0.9688,
+      "f1": 0.9815,
+      "tp": 53,
+      "fp": 1,
+      "tn": 31,
+      "fn": 1,
+      "false_negative_rate": 0.0185,
+      "roc_auc": 0.9959,
+      "pr_auc": 0.9975,
+      "feature_space": "raw_30",
+      "num_features": 30,
+      "num_qubits": 0,
+      "training_time": 0.0458,
+      "inference_time": 0.002101,
+      "random_seed": 42,
+      "val_accuracy": 0.9765,
+      "val_f1": 0.9808
+    },
+    {
+      "model": "Random Forest",
+      "accuracy": 0.8953,
+      "precision": 0.8947,
+      "recall": 0.9444,
+      "specificity": 0.8125,
+      "f1": 0.9189,
+      "tp": 51,
+      "fp": 6,
+      "tn": 26,
+      "fn": 3,
+      "false_negative_rate": 0.0556,
+      "roc_auc": 0.9821,
+      "pr_auc": 0.99,
+      "feature_space": "raw_30",
+      "num_features": 30,
+      "num_qubits": 0,
+      "training_time": 0.4721,
+      "inference_time": 0.058023,
+      "random_seed": 42,
+      "val_accuracy": 0.9765,
+      "val_f1": 0.9808
+    },
+    {
+      "model": "Classical MLP",
+      "accuracy": 0.9419,
+      "precision": 0.9298,
+      "recall": 0.9815,
+      "specificity": 0.875,
+      "f1": 0.955,
+      "tp": 53,
+      "fp": 4,
+      "tn": 28,
+      "fn": 1,
+      "false_negative_rate": 0.0185,
+      "roc_auc": 0.9919,
+      "pr_auc": 0.9954,
+      "feature_space": "raw_30",
+      "num_features": 30,
+      "num_qubits": 0,
+      "training_time": 0.2307,
+      "inference_time": 0.000889,
+      "random_seed": 42,
+      "val_accuracy": 0.9882,
+      "val_f1": 0.9905
+    }
+  ]
+}
