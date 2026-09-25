@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-09-25T12:33:42.724909",
+  "n_models": 10,
+  "ablations": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "random_seed": 42
+}

@@ -1,0 +1,11 @@
+model,ablation,pipeline,feature_space,num_features,num_qubits,accuracy,precision,recall,specificity,f1,roc_auc,pr_auc,fn,training_time,inference_time
+Logistic Regression,A,Raw->Classical,raw,30,0,0.9651,0.9811,0.963,0.9688,0.972,0.9954,0.9971,2,0.0304,0.002493
+SVM (RBF),A,Raw->Classical,raw,30,0,0.9767,0.9815,0.9815,0.9688,0.9815,0.9959,0.9975,1,0.0303,0.004554
+Random Forest,A,Raw->Classical,raw,30,0,0.8953,0.8947,0.9444,0.8125,0.9189,0.9821,0.99,3,0.2301,0.039711
+Classical MLP,A,Raw->Classical,raw,30,0,0.9419,0.9298,0.9815,0.875,0.955,0.9919,0.9954,1,0.128,0.002416
+Classical MLP,B,Raw->MLP,raw,30,0,0.9419,0.9298,0.9815,0.875,0.955,0.9919,0.9954,1,0.128,0.002416
+Latent-LogReg,C,Raw->Encoder->16dim->Classical,latent_16,16,0,0.9302,0.9286,0.963,0.875,0.9455,0.9751,0.9825,2,,
+Latent-SVM,C,Raw->Encoder->16dim->Classical,latent_16,16,0,0.9651,0.9636,0.9815,0.9375,0.9725,0.9931,0.9959,1,,
+ClassicalFS-LogReg,D,Raw->Encoder->16dim->ClassicalFS->Classifier,classical_selected_8,8,0,0.9302,0.9444,0.9444,0.9062,0.9444,0.9716,0.9797,3,0.0126,0.000473
+ClassicalFS-SVM,D,Raw->Encoder->16dim->ClassicalFS->Classifier,classical_selected_8,8,0,0.9302,0.9286,0.963,0.875,0.9455,0.985,0.9908,2,0.0183,0.001763
+Hybrid VQC,E,Raw->Encoder->16dim->QuantumFS->VQC,quantum_selected_8,8,8,0.9419,0.9153,1.0,0.8438,0.9558,0.9705,0.9708,0,309.69,0.7266

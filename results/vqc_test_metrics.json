@@ -1,0 +1,22 @@
+{
+  "model": "Hybrid VQC",
+  "accuracy": 0.9419,
+  "precision": 0.9153,
+  "recall": 1.0,
+  "specificity": 0.8438,
+  "f1": 0.9558,
+  "tp": 54,
+  "fp": 5,
+  "tn": 27,
+  "fn": 0,
+  "false_negative_rate": 0.0,
+  "roc_auc": 0.9705,
+  "pr_auc": 0.9708,
+  "training_time": 309.69,
+  "inference_time": 0.7266,
+  "feature_space": "quantum_selected_8",
+  "num_features": 8,
+  "num_qubits": 8,
+  "pipeline": "Raw->Encoder->16dim->QuantumFS->VQC",
+  "ablation": "E"
+}
