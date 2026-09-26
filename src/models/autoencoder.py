@@ -17,6 +17,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from configs.config import (
@@ -95,8 +96,8 @@ def load_processed_splits() -> dict:
     for split in ["train", "val", "test"]:
         X = pd.read_csv(os.path.join(DATA_PROCESSED_DIR, f"X_{split}.csv"))
         y = pd.read_csv(os.path.join(DATA_PROCESSED_DIR, f"y_{split}.csv")).squeeze()
-        data[f"X_{split}"] = torch.FloatTensor(X.values)
-        data[f"y_{split}"] = torch.LongTensor(y.values)
+        data[f"X_{split}"] = torch.tensor(X.values.copy(), dtype=torch.float32)
+        data[f"y_{split}"] = torch.tensor(y.values.copy(), dtype=torch.long)
     return data
 
 
@@ -211,6 +212,44 @@ def extract_latent_features(
     return z.cpu().numpy()
 
 
+def evaluate_reconstruction(
+    model: Autoencoder,
+    data: dict[str, torch.Tensor]
+) -> dict:
+    """
+    Evaluate autoencoder reconstruction fidelity across train, val, and test splits.
+    Computes MSE, RMSE, MAE, and R^2 score.
+    """
+    device = next(model.parameters()).device
+    model.eval()
+    results = {}
+
+    print(f"\n[AE-RECONSTRUCTION FIDELITY]")
+    with torch.no_grad():
+        for split in ["train", "val", "test"]:
+            X_tensor = data[f"X_{split}"].to(device)
+            X_recon, _ = model(X_tensor)
+
+            X_orig_np = X_tensor.cpu().numpy()
+            X_recon_np = X_recon.cpu().numpy()
+
+            mse = float(mean_squared_error(X_orig_np, X_recon_np))
+            rmse = float(np.sqrt(mse))
+            mae = float(mean_absolute_error(X_orig_np, X_recon_np))
+            r2 = float(r2_score(X_orig_np, X_recon_np))
+
+            results[split] = {
+                "mse": round(mse, 6),
+                "rmse": round(rmse, 6),
+                "mae": round(mae, 6),
+                "r2_score": round(r2, 6),
+                "n_samples": int(len(X_orig_np))
+            }
+            print(f"  Split: {split:5s} | MSE: {mse:.6f} | RMSE: {rmse:.6f} | MAE: {mae:.6f} | R2: {r2:.4f}")
+
+    return results
+
+
 def validate_latent_space(latent_train: np.ndarray, latent_val: np.ndarray,
                           y_train: np.ndarray) -> dict:
     """
@@ -297,6 +336,9 @@ def run_autoencoder_pipeline():
     validation_report = validate_latent_space(
         latent_train, latent_val, data["y_train"].numpy()
     )
+
+    # Evaluate reconstruction fidelity
+    recon_report = evaluate_reconstruction(model, data)
     
     # Save latent features
     latent_cols = [f"latent_{i}" for i in range(LATENT_DIM)]
@@ -340,8 +382,14 @@ def run_autoencoder_pipeline():
     report_path = os.path.join(RESULTS_DIR, "latent_validation.json")
     with open(report_path, "w") as f:
         json.dump(validation_report, f, indent=2)
+
+    # Save reconstruction fidelity report
+    recon_path = os.path.join(RESULTS_DIR, "autoencoder_reconstruction.json")
+    with open(recon_path, "w") as f:
+        json.dump(recon_report, f, indent=2)
+    print(f"[AE] Reconstruction report saved to {recon_path}")
     
-    return model, history, validation_report
+    return model, history, validation_report, recon_report
 
 
 # Alias for pipeline runner

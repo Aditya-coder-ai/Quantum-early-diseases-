@@ -42,8 +42,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.0274,
-      "inference_time": 0.000557,
+      "training_time": 0.0104,
+      "inference_time": 0.000331,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -65,8 +65,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.0458,
-      "inference_time": 0.002101,
+      "training_time": 0.0178,
+      "inference_time": 0.001542,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -88,8 +88,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.4721,
-      "inference_time": 0.058023,
+      "training_time": 0.2168,
+      "inference_time": 0.036492,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -111,8 +111,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.2307,
-      "inference_time": 0.000889,
+      "training_time": 0.0838,
+      "inference_time": 0.000189,
       "random_seed": 42,
       "val_accuracy": 0.9882,
       "val_f1": 0.9905

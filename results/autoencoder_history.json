@@ -257,5 +257,5 @@
   ],
   "best_epoch": 105,
   "best_val_loss": 0.13485831022262573,
-  "training_time": 8.99
+  "training_time": 8.08
 }

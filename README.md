@@ -145,6 +145,10 @@ python scripts/run_pipeline.py
   ```bash
   python scripts/run_preprocessing.py
   ```
+- **Run Feature Extraction & Latent Validation Pipeline (Part 3):**
+  ```bash
+  python scripts/run_feature_extraction.py
+  ```
 - **Train Classical Baselines:**
   ```bash
   python -m src.models.classical_baselines
@@ -175,6 +179,10 @@ python scripts/run_pipeline.py
 - **Run Part 2 Preprocessing & Leakage Tests (12/12 Passed):**
   ```bash
   python -m pytest -v tests/test_preprocessing.py
+  ```
+- **Run Part 3 Feature Extraction & Latent Tests (10/10 Passed):**
+  ```bash
+  python -m pytest -v tests/test_autoencoder.py
   ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash

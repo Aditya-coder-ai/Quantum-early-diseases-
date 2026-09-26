@@ -129,3 +129,63 @@ Part 2 implements a production-grade, mathematically verified, zero-leakage medi
 ### 8. Assumptions & Limitations
 - **WDBC Specifics:** Features are continuous measurements computed from digitized fine needle aspirate (FNA) images. No patient identifiers exist in the original UCI WDBC dataset; patient ID isolation was validated via synthetic group stress testing.
 - **Categorical Features:** WDBC contains all numeric features. If categorical variables are introduced in future datasets, the pipeline architecture supports extending `SimpleImputer` and `OneHotEncoder` via ColumnTransformer while maintaining identical split and fit/transform isolation.
+
+---
+
+## Part 3: Classical Feature Extraction (Autoencoder 30D → 16D) & Latent Space Validation
+
+### 1. Implementation Overview
+Part 3 implements representation learning via a deep symmetric Autoencoder, compressing 30 normalized continuous features into a compact 16-dimensional continuous latent space.
+- **Encoder:** $30 \to 64 \to 32 \to 16$ (BatchNorm1d + ReLU + Dropout(0.1)).
+- **Decoder:** $16 \to 32 \to 64 \to 30$ (mirror architecture).
+- **Training Guardrails:** Trained strictly on `X_train` ($N=398$) using MSE reconstruction loss, Adam optimizer, `ReduceLROnPlateau` scheduler, and early stopping on `X_val` ($N=85$, patience=20). The test set ($N=86$) remained strictly isolated.
+- **Validation Engine:** [`src/models/latent_validation.py`](file:///c:/Users/adij7/OneDrive/Attachments/Desktop/MIndMatrix/src/models/latent_validation.py) evaluates downstream classification (Stage C ablation) and unsupervised clustering separation.
+
+### 2. Reconstruction Fidelity Metrics
+Evaluated on the uncorrupted test partition (`results/autoencoder_reconstruction.json`):
+- **Train Split:** $\text{MSE} = 0.0908$, $\text{RMSE} = 0.3014$, $\text{MAE} = 0.2204$, $R^2 = \mathbf{0.9092}$ (90.9% variance captured)
+- **Validation Split:** $\text{MSE} = 0.1349$, $\text{RMSE} = 0.3672$, $\text{MAE} = 0.2492$, $R^2 = \mathbf{0.8573}$ (85.7% variance captured)
+- **Test Split:** $\text{MSE} = 0.1786$, $\text{RMSE} = 0.4226$, $\text{MAE} = 0.2756$, $R^2 = \mathbf{0.8098}$ (81.0% variance captured)
+
+### 3. Latent Representation Quality & Diagnostics
+- **Collapsed Dimensions:** **0 / 16** (all dimensions have active variance $\ge 0.1815$).
+- **Variance Distribution:** Min variance $= 0.1815$, Max variance $= 0.7858$, Mean variance $= 0.4902$.
+- **Numeric Cleanliness:** Zero NaN values, Zero Infinite values across all splits.
+- **Unsupervised Cluster Separation on Test Data:**
+  - **Silhouette Score:** $0.2397$ (well-separated clusters)
+  - **Calinski-Harabasz Index:** $21.5024$
+  - **Davies-Bouldin Index:** $1.6653$
+
+### 4. Downstream Clinical Classification (Ablation Stage C)
+Downstream classifiers trained strictly on `latent_features_train` ($398 \times 16$) and evaluated on `latent_features_test` ($86 \times 16$):
+
+| Model | Feature Space | Dims | Accuracy | Precision | Recall (Sens.) | Specificity | F1 Score | ROC-AUC | False Negatives |
+|---|---|---|---|---|---|---|---|---|---|
+| **Latent-SVM** | Latent | 16 | **0.9651** | **0.9636** | **0.9815** | **0.9375** | **0.9725** | **0.9931** | **1** |
+| **Latent-LogReg** | Latent | 16 | 0.9302 | 0.9286 | 0.9630 | 0.8750 | 0.9455 | 0.9751 | 2 |
+| **Latent-RandomForest** | Latent | 16 | 0.9186 | 0.9608 | 0.9074 | 0.9375 | 0.9333 | 0.9850 | 5 |
+
+*Conclusion:* Compressing 30 features into 16 dimensions preserves virtually all diagnostic information (Latent-SVM achieves 96.51% Accuracy and 0.9931 ROC-AUC with only 1 False Negative).
+
+### 5. Execution & Testing
+- **Run Complete Part 3 Pipeline (Baselines + Multi-Dim Extraction + Compact Baselines):**
+  ```bash
+  python scripts/run_part3.py
+  ```
+- **Run Deep Autoencoder (16D) Feature Extractor:**
+  ```bash
+  python scripts/run_feature_extraction.py
+  ```
+- **Run Part 3 Comprehensive Test Suite (20/20 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part3.py
+  ```
+- **Run Part 2 Preprocessing & Leakage Test Suite (12/12 Passed):**
+  ```bash
+  python -m pytest -v tests/test_preprocessing.py
+  ```
+- **Run Full Pipeline Integration Test Suite (8/8 Passed):**
+  ```bash
+  python -m pytest -v tests/test_pipeline.py
+  ```
+

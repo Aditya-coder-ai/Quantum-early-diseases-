@@ -7,10 +7,14 @@ for classical classifiers, they won't work for quantum circuits either.
 """
 import os
 import sys
+import json
+import warnings
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from configs.config import RANDOM_SEED, RESULTS_DIR, DATA_PROCESSED_DIR
@@ -28,6 +32,15 @@ def load_latent_data() -> dict:
     return data
 
 
+def compute_latent_clustering_metrics(X_latent: np.ndarray, y: np.ndarray) -> dict:
+    """Evaluate how well benign vs malignant classes separate in 16D latent space."""
+    return {
+        "silhouette_score": round(float(silhouette_score(X_latent, y)), 4),
+        "calinski_harabasz_score": round(float(calinski_harabasz_score(X_latent, y)), 4),
+        "davies_bouldin_score": round(float(davies_bouldin_score(X_latent, y)), 4),
+    }
+
+
 def validate_latent_classifiers():
     """Train and evaluate classifiers on the latent representation."""
     print("\n" + "="*60)
@@ -42,17 +55,33 @@ def validate_latent_classifiers():
     
     print(f"[LATENT-VAL] Latent train shape: {X_train.shape}")
     print(f"[LATENT-VAL] Latent test shape:  {X_test.shape}")
+
+    # Evaluate unsupervised clustering metrics on test set
+    cluster_metrics = compute_latent_clustering_metrics(X_test.values, y_test.values)
+    print(f"[LATENT-VAL] Latent Clustering Metrics (Test): "
+          f"Silhouette={cluster_metrics['silhouette_score']} | "
+          f"Calinski-Harabasz={cluster_metrics['calinski_harabasz_score']} | "
+          f"Davies-Bouldin={cluster_metrics['davies_bouldin_score']}")
     
-    models = {
-        "Latent-LogReg": LogisticRegression(
-            max_iter=1000, class_weight="balanced",
-            random_state=RANDOM_SEED
-        ),
-        "Latent-SVM": SVC(
-            kernel="rbf", class_weight="balanced",
-            probability=True, random_state=RANDOM_SEED
-        ),
-    }
+    with open(os.path.join(RESULTS_DIR, "latent_clustering_metrics.json"), "w") as f:
+        json.dump(cluster_metrics, f, indent=2)
+    
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", FutureWarning)
+        models = {
+            "Latent-LogReg": LogisticRegression(
+                max_iter=1000, class_weight="balanced",
+                random_state=RANDOM_SEED
+            ),
+            "Latent-SVM": SVC(
+                kernel="rbf", class_weight="balanced",
+                probability=True, random_state=RANDOM_SEED
+            ),
+            "Latent-RandomForest": RandomForestClassifier(
+                n_estimators=100, class_weight="balanced",
+                random_state=RANDOM_SEED, n_jobs=-1
+            ),
+        }
     
     all_metrics = []
     for name, model in models.items():

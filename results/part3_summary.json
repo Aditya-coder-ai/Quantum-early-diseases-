@@ -1,6 +1,6 @@
 {
   "status": "COMPLETE",
-  "timestamp": "2026-09-25 22:59:10",
+  "timestamp": "2026-09-26 11:28:56",
   "baselines_count": 4,
   "compact_experiments_count": 16,
   "extraction_methods": [
@@ -31,8 +31,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.0164,
-      "inference_time": 0.000496,
+      "training_time": 0.0049,
+      "inference_time": 0.000155,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -54,8 +54,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.0439,
-      "inference_time": 0.002983,
+      "training_time": 0.0122,
+      "inference_time": 0.000708,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -77,8 +77,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.4217,
-      "inference_time": 0.075567,
+      "training_time": 0.1457,
+      "inference_time": 0.028268,
       "random_seed": 42,
       "val_accuracy": 0.9765,
       "val_f1": 0.9808
@@ -100,8 +100,8 @@
       "feature_space": "raw_30",
       "num_features": 30,
       "num_qubits": 0,
-      "training_time": 0.2608,
-      "inference_time": 0.000581,
+      "training_time": 0.0574,
+      "inference_time": 0.000376,
       "random_seed": 42,
       "val_accuracy": 0.9882,
       "val_f1": 0.9905
