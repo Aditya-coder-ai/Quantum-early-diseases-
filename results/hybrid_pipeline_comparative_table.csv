@@ -1,0 +1,5 @@
+configuration,experiment_id,feature_selection,imbalance_method,val_accuracy,val_f1,val_pr_auc,val_minority_recall,test_accuracy,test_f1,test_roc_auc,test_pr_auc,test_minority_recall,false_negatives,total_runtime_s
+Config_A_Classical_FS_Classical_SVM,config_a_classical_e3784b8ff2d7,mutual_info,class_weight,0.9529,0.9608,0.9993,1.0,0.9419,0.955,0.9722,0.9783,0.875,4,47.78
+Config_B_QAOA_FS_VQC_Original,config_b_qaoa_vqc_orig_fa7a21e45376,qaoa,none,0.9294,0.9464,0.9977,0.8125,0.8605,0.8983,0.9439,0.9556,0.6562,11,38.01
+Config_C_QAOA_FS_VQC_SMOTE,config_c_qaoa_vqc_smote_07ff69d8f858,qaoa,smote,0.9412,0.9524,0.982,0.9375,0.8837,0.9123,0.956,0.9702,0.75,8,48.13
+Config_D_QAOA_FS_VQC_QGAN,config_d_qaoa_vqc_qgan_f79eee50ae94,qaoa,qgan,0.9412,0.9541,0.9914,0.875,0.8953,0.9204,0.967,0.9804,0.7812,7,53.32

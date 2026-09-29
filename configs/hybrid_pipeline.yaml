@@ -1,0 +1,47 @@
+# Complete Hybrid Classical-Quantum Pipeline Configuration
+experiment_name: "hybrid_qaoa_smote_vqc"
+seed: 42
+
+# Dataset & Splitting
+train_ratio: 0.70
+val_ratio: 0.15
+test_ratio: 0.15
+
+# Preprocessing
+scaling_method: "standard"
+
+# Feature Extraction (Part 3 Autoencoder)
+latent_dim: 16
+ae_hidden_dims:
+  - 64
+  - 32
+ae_epochs: 40
+ae_batch_size: 32
+ae_lr: 0.001
+
+# Feature Selection (Part 4 QAOA vs Classical)
+feature_selection_method: "qaoa"
+num_selected_features: 8
+
+# Class Imbalance Handling (Part 5)
+imbalance_method: "smote"
+imbalance_ratio: 1.0
+
+# Quantum & VQC (Part 6)
+preferred_device: "lightning.qubit"
+fallback_device: "default.qubit"
+diff_method: "adjoint"
+vqc_layers: 2
+vqc_ansatz: "ansatz_b"
+vqc_entanglement: "ring"
+vqc_lr: 0.02
+vqc_batch_size: 16
+vqc_epochs: 35
+vqc_patience: 8
+vqc_shots: null
+
+# Classical Reference Model
+classical_baseline: "SVM_RBF"
+
+# Artifact Storage
+artifacts_dir: "artifacts/experiments"

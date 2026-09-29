@@ -208,6 +208,22 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_part6.py
   ```
+- **Run Part 7 Complete Hybrid Pipeline (Single Run):**
+  ```bash
+  python scripts/run_hybrid_pipeline.py --config configs/hybrid_pipeline.yaml
+  ```
+- **Run Part 7 Comparative Benchmarks (Configs A, B, C, D):**
+  ```bash
+  python scripts/run_hybrid_pipeline.py --mode comparative
+  ```
+- **Run Part 7 Standalone Quantum Inference CLI:**
+  ```bash
+  python scripts/predict.py --sample-patient
+  ```
+- **Run Part 7 Automated Integration Test Suite (18/18 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part7_pipeline.py
+  ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
   python -m pytest -v tests/test_pipeline.py

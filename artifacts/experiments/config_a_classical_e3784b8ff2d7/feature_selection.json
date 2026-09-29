@@ -1,0 +1,24 @@
+{
+  "method": "mutual_info",
+  "k": 8,
+  "selected_indices": [
+    2,
+    3,
+    5,
+    8,
+    10,
+    12,
+    13,
+    15
+  ],
+  "selected_names": [
+    "latent_2",
+    "latent_3",
+    "latent_5",
+    "latent_8",
+    "latent_10",
+    "latent_12",
+    "latent_13",
+    "latent_15"
+  ]
+}
