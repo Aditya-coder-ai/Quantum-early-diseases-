@@ -161,6 +161,14 @@ python scripts/run_pipeline.py
   ```bash
   python -m src.quantum.feature_selection
   ```
+- **Run Part 4 Feature Selection (Classical + QAOA Optimization):**
+  ```bash
+  python scripts/run_part4.py
+  ```
+- **Run Part 4 Feature Selection Test Suite (26/26 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part4.py
+  ```
 - **Train Hybrid VQC Model:**
   ```bash
   python -m src.training.train_vqc
@@ -180,9 +188,9 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_preprocessing.py
   ```
-- **Run Part 3 Feature Extraction & Latent Tests (10/10 Passed):**
+- **Run Part 4 Automated Test Suite (26/26 Passed):**
   ```bash
-  python -m pytest -v tests/test_autoencoder.py
+  python -m pytest -v tests/test_part4.py
   ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
