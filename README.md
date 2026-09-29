@@ -64,6 +64,14 @@ In clinical oncology screening, a **false negative** (misclassifying a malignant
 
 ```
 MIndMatrix/
+├── app/                          # Part 10: Production FastAPI inference REST service
+│   ├── main.py                   # App lifecycle, routers, CORS & error handling
+│   ├── config.py                 # Pydantic BaseSettings & environment variables
+│   ├── dependencies.py           # Dependency injection providers
+│   ├── api/                      # Health, Model, Prediction & Explanation endpoints
+│   ├── schemas/                  # Pydantic v2 request/response contracts
+│   ├── services/                 # ModelManager, InferenceService, ExplanationService
+│   └── core/                     # Logging, errors, security & rate limiting
 ├── configs/
 │   ├── config.py                 # Central configuration (paths, seeds, dimensions, hyperparams)
 │   └── __init__.py
@@ -127,7 +135,10 @@ MIndMatrix/
 │   ├── test_part7_pipeline.py    # Integration tests for end-to-end hybrid pipeline
 │   ├── test_part8_explainability.py # Unit and integration tests for explainability
 │   ├── test_part9_comparison.py  # 18 comprehensive tests for Part 9 comparison suite
-│   └── test_part10_security.py   # 31 tests for Part 10 privacy & security
+│   ├── test_part10_security.py   # 31 tests for Part 10 privacy & security
+│   └── test_part10_fastapi.py    # 19 tests for Part 10 FastAPI service
+├── Dockerfile                    # Container definition for FastAPI inference service
+├── docker-compose.yml            # Multi-container service configuration
 ├── requirements.txt              # Pinned Python package dependencies
 ├── DATASET_CARD.md               # Detailed clinical dataset documentation
 ├── PROJECT_STATUS.md             # Engineering status, diagnosis, and validation logs
@@ -259,6 +270,77 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_pipeline.py
   ```
+- **Run Part 10 FastAPI Inference Service Test Suite (19/19 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part10_fastapi.py
+  ```
+
+---
+
+## FastAPI Inference Service (Part 10)
+
+The trained hybrid classical-quantum pipeline is exposed via a production-grade FastAPI REST service.
+
+### 1. Launching the API Service
+
+- **Development Mode (with auto-reload):**
+  ```bash
+  uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  ```
+- **Production Mode (single worker to optimize quantum simulation memory):**
+  ```bash
+  uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
+  ```
+- **Interactive Documentation:**
+  - Swagger UI: `http://localhost:8000/docs`
+  - ReDoc: `http://localhost:8000/redoc`
+
+### 2. Core API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` / `/api/v1/health` | Service liveness probe |
+| `GET` | `/ready` / `/api/v1/ready` | Inference readiness check |
+| `GET` | `/api/v1/model/info` | Safe model metadata (qubits, layers, features) |
+| `POST` | `/api/v1/predict` | Single sample inference (list or dict input) |
+| `POST` | `/api/v1/predict/batch` | Vectorized batch inference (up to 100 samples) |
+| `POST` | `/api/v1/explain` | Kernel SHAP feature attribution (30 features) |
+| `POST` | `/api/v1/explain/image` | Modality check & Grad-CAM verification |
+
+### 3. Example Request & Response
+
+**Single Sample Prediction (`POST /api/v1/predict`):**
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "features": [17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.2419, 0.07871,
+                 1.095, 0.9053, 8.589, 153.4, 0.006399, 0.04904, 0.05373, 0.01587, 0.03003, 0.006193,
+                 25.38, 17.33, 184.6, 2019.0, 0.1622, 0.6656, 0.7119, 0.2654, 0.4601, 0.1189]
+  }'
+```
+
+**Response:**
+```json
+{
+  "request_id": "4b5d6f1a-...",
+  "model": {
+    "id": "hybrid_vqc_breast_cancer",
+    "version": "1.0.0"
+  },
+  "prediction": {
+    "class_label": 1,
+    "class_name": "Malignant",
+    "probability": 0.7926,
+    "threshold": 0.5
+  },
+  "metadata": {
+    "inference_time_ms": 11.2,
+    "input_features_count": 30
+  }
+}
+```
 
 ---
 

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  inference-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mindmatrix-inference-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - QUANTUM_BACKEND=default.qubit
+      - CLASSIFICATION_THRESHOLD=0.50
+      - MAX_BATCH_SIZE=100
+      - RATE_LIMIT_REQUESTS=60
+      - RATE_LIMIT_WINDOW_SECONDS=60
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

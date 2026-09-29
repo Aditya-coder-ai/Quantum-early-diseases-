@@ -34,7 +34,8 @@ The **Hybrid Classical–Quantum Medical Disease Detection System** has been ful
 | **15. Complete Hybrid Pipeline (Part 7)** | `src/pipeline/` | `COMPLETE` | End-to-end reproducible pipeline, inference CLI, 18/18 tests passed |
 | **16. Model Explainability (Part 8)** | `src/explainability/` | `COMPLETE` | Quantum SHAP, Grad-CAM, Permutation importance, 17/17 tests passed |
 | **17. Classical vs Hybrid Comparison (Part 9)** | `src/comparison/` | `COMPLETE` | 9 models across 5 seeds, paired statistical tests, ablations, 13 figures, 18/18 tests passed |
-| **18. Privacy, Security & Safe Medical Data Handling (Part 10)** | `src/security/` | `COMPLETE` | De-identification, secret scan, audit trail, input validation, RBAC foundation, artifact integrity |
+| **18. Privacy, Security & Safe Medical Data Handling** | `src/security/` | `COMPLETE` | De-identification, secret scan, audit trail, input validation, RBAC foundation, artifact integrity |
+| **19. FastAPI Inference Service (Part 10)** | `app/` | `COMPLETE` | Production-oriented REST API, ModelManager singleton, Pydantic schemas, SHAP/Grad-CAM, 19/19 tests passed |
 
 ---
 
@@ -788,5 +789,98 @@ Part 10 implements a complete, healthcare-conscious privacy, security, and safe 
 - **Audit Documentation Artifact:**
   Formal compliance certification is published at `results/security_audit_report.md`.
 
+---
 
+## Part 10: FastAPI Inference Service & Production REST API
 
+### 1. Implementation Overview
+Part 10 implements a production-ready, asynchronous REST API service around the trained hybrid classical-quantum medical detection pipeline using **FastAPI**, **Pydantic v2**, and **Uvicorn**.
+
+It strictly adheres to the core inference constraints:
+- **Zero Training During Inference:** Never invokes `.fit()`, `.train()`, optimizer steps, or recalculations.
+- **Zero Imbalance Processing During Inference:** SMOTE, QGAN, and generative oversampling are completely excluded from the request path.
+- **Single-Load Lifecycle:** All 5 artifacts (`scaler.joblib`, `autoencoder.pth`, `feature_selection.json`, `angle_scaler.json`, `vqc_model.pt`) and the background training baseline for Kernel SHAP are initialized once during server startup into memory via the thread-safe `ModelManager` singleton.
+- **Strict Data Contracts:** Pydantic schemas enforce 30 Cytological feature attributes with numeric type checking, rejection of missing/extra keys, non-finite values, and batch size ceiling enforcement (`MAX_BATCH_SIZE = 100`).
+- **Mathematical Consistency:** Direct Python pipeline execution matches API predictions to machine precision ($|p_{\text{api}} - p_{\text{direct}}| < 10^{-4}$).
+
+### 2. Service Architecture & Directory Layout
+```
+app/
+├── __init__.py
+├── main.py                     # FastAPI app instance, lifespan startup/shutdown, middleware, routers
+├── config.py                   # Pydantic BaseSettings, environment variable management, CORS origins
+├── dependencies.py             # Dependency injection providers (ModelManager, InferenceService, ExplanationService)
+├── api/
+│   ├── __init__.py
+│   ├── health.py               # GET /health, GET /ready, GET /api/v1/health, GET /api/v1/ready
+│   ├── model.py                # GET /api/v1/model/info
+│   ├── prediction.py           # POST /api/v1/predict, POST /api/v1/predict/batch
+│   └── explanation.py          # POST /api/v1/explain, POST /api/v1/explain/image
+├── schemas/
+│   ├── __init__.py
+│   ├── common.py               # HealthResponse, ReadinessResponse, ModelInfoResponse
+│   ├── prediction.py           # PredictionRequest, PredictionResponse, BatchPredictionRequest, BatchPredictionResponse
+│   └── explanation.py          # ExplanationRequest, ExplanationResponse, ImageExplanationResponse
+├── services/
+│   ├── __init__.py
+│   ├── model_manager.py        # Singleton artifact loader, thread-safe locks, validation checks
+│   ├── inference_service.py    # Preprocessing -> 16D AE -> 8D QUBO -> AngleScaler -> 8-Qubit VQC
+│   └── explanation_service.py  # Local Kernel SHAP (30 features) & Grad-CAM vision modality gate
+└── core/
+    ├── __init__.py
+    ├── errors.py               # Custom exceptions & safe error formatting (traceback suppression)
+    ├── logging.py              # Structured JSON logging with request_id and PHI redaction
+    └── security.py             # Client IP in-memory rate limiter & token auth foundation
+```
+
+### 3. API Endpoints Specification
+
+| Method | Route | Description | Input / Output Contract |
+|---|---|---|---|
+| `GET` | `/health` / `/api/v1/health` | Lightweight liveness probe | Returns `status: "healthy"`, uptime, model loaded flag |
+| `GET` | `/ready` / `/api/v1/ready` | Readiness verification | Returns 200 if model & preprocessor are ready; 503 if not loaded |
+| `GET` | `/api/v1/model/info` | Safe model metadata | Returns `model_id`, `version`, `qubits: 8`, `features: 30`, `backend`, zero filesystem paths |
+| `POST` | `/api/v1/predict` | Single sample inference | Validates 30 cytologic features, returns class (`Malignant`/`Benign`), probability, latency |
+| `POST` | `/api/v1/predict/batch` | Vectorized batch inference | Accepts up to 100 samples; preallocates tensors and executes in batch |
+| `POST` | `/api/v1/explain` | Tabular Kernel SHAP | Computes attributions across all 30 features; returns sorted top positive/negative drivers |
+| `POST` | `/api/v1/explain/image` | Vision modality gate | Validates image dimension & format; verifies tabular pipeline modality match |
+
+### 4. Verification & Automated Test Suite
+- **Test File:** `tests/test_part10_fastapi.py`
+- **Result:** **19 / 19 PASSED in 9.69s**
+- **Test Coverage:**
+  1. `test_health_endpoint`: Verified 200 OK and model status.
+  2. `test_readiness_endpoint`: Verified 200 OK and validation verification.
+  3. `test_model_info_safe_metadata`: Verified no sensitive filesystem paths leaked.
+  4. `test_predict_single_sample_list`: Successfully classified test patient ($p = 0.7926$, class 1).
+  5. `test_predict_single_sample_dict`: Successfully mapped named cytologic dictionary to tensor.
+  6. `test_prediction_consistency_direct_vs_api`: Zero discrepancy ($|p_{\text{api}} - p_{\text{direct}}| < 10^{-4}$).
+  7. `test_batch_prediction`: Vectorized batch of 5 samples returned 5 valid predictions.
+  8. `test_reject_wrong_feature_count`: Correctly rejected 29 features with 422 Unprocessable Entity.
+  9. `test_reject_nan_values`: Correctly rejected non-numeric / null values with 422.
+  10. `test_reject_missing_dict_keys`: Correctly rejected partial feature dictionaries.
+  11. `test_reject_empty_batch`: Correctly rejected empty sample lists with 422.
+  12. `test_reject_exceeded_batch_size`: Correctly rejected batch $> 100$ with 400 Bad Request.
+  13. `test_request_id_propagation`: Client-supplied `X-Request-ID` preserved in response header and body.
+  14. `test_explain_tabular_shap`: Kernel SHAP generated all 30 feature attributions.
+  15. `test_explain_image_modality_routing`: Validated image upload and modality gateway.
+  16. `test_rate_limiter_allows_normal_traffic`: Verified continuous traffic within threshold passes.
+  17. `test_rate_limiter_burst_enforcement`: Verified 429 Too Many Requests when burst limits are exceeded.
+
+### 5. Execution Commands
+- **Launch Development Server:**
+  ```bash
+  uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  ```
+- **Launch Production Server (Single Worker for VQC Memory Efficiency):**
+  ```bash
+  uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
+  ```
+- **Execute Automated Part 10 Test Suite:**
+  ```bash
+  pytest tests/test_part10_fastapi.py -v
+  ```
+- **Run Containerized Service via Docker Compose:**
+  ```bash
+  docker-compose up --build -d
+  ```
