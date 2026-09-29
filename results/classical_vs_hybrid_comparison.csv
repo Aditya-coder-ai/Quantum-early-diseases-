@@ -1,4 +1,10 @@
 model_id,model_name,model_family,input_space,n_features,reduction_pct,threshold,recall,specificity,precision,f1,roc_auc,pr_auc,mcc,balanced_acc,false_negatives,brier_score,training_time_s,inference_latency_ms,n_qubits,circuit_depth,quantum_gates,trainable_params,backend
-logreg_test,Test Logistic Regression,classical,raw_30,30,0.0,0.38,0.9688,1.0,1.0,0.9841,0.9954,0.9938,0.9753,0.9844,1,0.0231,0.0075,0.0028,0,0,0,31,scikit-learn (CPU)
-compact_svm_test,Test Compact SVM,compact_classical,selected_8_qaoa,8,73.33,0.3,0.9062,0.9815,0.9667,0.9355,0.9925,0.9876,0.9003,0.9439,3,0.0364,0.0094,0.0085,0,0,0,864,scikit-learn (CPU)
-vqc_test,Test Hybrid VQC,hybrid_vqc,selected_8_qaoa,8,73.33,0.58,0.8438,0.8704,0.7941,0.8182,0.9543,0.9382,0.706,0.8571,5,0.1114,14.7041,2.1932,8,1,0,16,PennyLane default.qubit (Simulation)
+logreg_raw,Logistic Regression,classical,raw_30,30,0.0,0.38,0.9688,1.0,1.0,0.9841,0.9954,0.9938,0.9753,0.9844,1,0.0231,0.0123,0.008,0,0,0,31,scikit-learn (CPU)
+svm_rbf_raw,SVM (RBF),classical,raw_30,30,0.0,0.3,0.8438,1.0,1.0,0.9153,0.9959,0.9944,0.8788,0.9219,5,0.0255,0.0175,0.014,0,0,0,2730,scikit-learn (CPU)
+rf_raw,Random Forest,classical,raw_30,30,0.0,0.3,0.8125,0.9815,0.963,0.8814,0.978,0.966,0.8269,0.897,6,0.0603,0.2346,0.1281,0,0,0,2656,scikit-learn (CPU)
+mlp_raw,Classical MLP,deep_learning,raw_30,30,0.0,0.1,0.9375,1.0,1.0,0.9677,0.9936,0.992,0.9508,0.9688,2,0.0221,0.274,0.0028,0,0,0,1537,scikit-learn MLP (CPU)
+compact_svm_classical_fs,Compact Classical (MI-SVM),compact_classical,selected_8_classical,8,73.33,0.34,0.875,1.0,1.0,0.9333,0.9826,0.9774,0.9026,0.9375,4,0.0452,0.0109,0.0081,0,0,0,664,scikit-learn (CPU)
+compact_svm_qaoa_fs,Compact Classical (QAOA-SVM),compact_classical,selected_8_qaoa,8,73.33,0.66,0.9375,0.9444,0.9091,0.9231,0.9902,0.9844,0.8766,0.941,2,0.0432,0.0117,0.0147,0,0,0,848,scikit-learn (CPU)
+hybrid_vqc_original,Hybrid VQC (Unweighted),hybrid_vqc,selected_8_qaoa,8,73.33,0.56,0.8125,0.963,0.9286,0.8667,0.963,0.949,0.7999,0.8877,6,0.0744,64.3128,3.9819,8,2,0,32,PennyLane default.qubit (Simulation)
+hybrid_vqc_smote,Hybrid VQC + SMOTE,hybrid_vqc,selected_8_qaoa,8,73.33,0.48,0.8125,0.9444,0.8966,0.8525,0.9554,0.9406,0.7739,0.8785,6,0.1146,33.2012,3.8426,8,2,0,32,PennyLane default.qubit (Simulation)
+hybrid_vqc_qgan,Hybrid VQC + QGAN,hybrid_vqc,selected_8_qaoa,8,73.33,0.48,0.8438,0.9074,0.8438,0.8438,0.9653,0.9535,0.7512,0.8756,5,0.077,77.7986,5.7476,8,2,0,32,PennyLane default.qubit (Simulation)
