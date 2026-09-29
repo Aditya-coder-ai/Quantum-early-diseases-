@@ -1,0 +1,9 @@
+feature,selected_by_qaoa,qaoa_selection_rank,shap_importance,shap_rank,classical_importance,alignment_note
+latent_8,True,6,0.18332,1,0.0,Divergent Attribution
+latent_3,True,3,0.07822,2,0.0,High SHAP & QAOA Priority
+latent_0,True,1,0.01262,3,0.01094,High SHAP & QAOA Priority
+latent_4,True,4,0.01253,4,0.00084,Moderate Alignment
+latent_1,True,2,0.0115,5,0.01431,Moderate Alignment
+latent_9,True,7,0.00783,6,0.00842,Moderate Alignment
+latent_14,True,8,0.00737,7,0.00337,Moderate Alignment
+latent_6,True,5,0.0042,8,0.00168,Moderate Alignment

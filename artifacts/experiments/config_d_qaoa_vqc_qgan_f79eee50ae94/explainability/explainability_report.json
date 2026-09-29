@@ -1,0 +1,314 @@
+{
+  "experiment_id": "config_d_qaoa_vqc_qgan_f79eee50ae94",
+  "data_modality": "tabular_vector",
+  "explanation_target": "compact_selected_features_to_vqc_probability",
+  "primary_explainer": "SHAP_KernelExplainer",
+  "num_samples_explained": 40,
+  "background_size": 40,
+  "global_importance_rankings": [
+    {
+      "feature_name": "latent_8",
+      "feature_index": 5,
+      "mean_abs_shap": 0.18332,
+      "mean_shap": -0.00632,
+      "std_shap": 0.20881,
+      "rank": 1,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "mixed"
+    },
+    {
+      "feature_name": "latent_3",
+      "feature_index": 2,
+      "mean_abs_shap": 0.07822,
+      "mean_shap": -0.01999,
+      "std_shap": 0.10211,
+      "rank": 2,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "mixed"
+    },
+    {
+      "feature_name": "latent_0",
+      "feature_index": 0,
+      "mean_abs_shap": 0.01262,
+      "mean_shap": -0.00132,
+      "std_shap": 0.0164,
+      "rank": 3,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "mixed"
+    },
+    {
+      "feature_name": "latent_4",
+      "feature_index": 3,
+      "mean_abs_shap": 0.01253,
+      "mean_shap": 0.0051,
+      "std_shap": 0.01333,
+      "rank": 4,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "positive_risk"
+    },
+    {
+      "feature_name": "latent_1",
+      "feature_index": 1,
+      "mean_abs_shap": 0.0115,
+      "mean_shap": -0.002,
+      "std_shap": 0.01653,
+      "rank": 5,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "positive_risk"
+    },
+    {
+      "feature_name": "latent_9",
+      "feature_index": 6,
+      "mean_abs_shap": 0.00783,
+      "mean_shap": -0.00257,
+      "std_shap": 0.02588,
+      "rank": 6,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "positive_risk"
+    },
+    {
+      "feature_name": "latent_14",
+      "feature_index": 7,
+      "mean_abs_shap": 0.00737,
+      "mean_shap": 0.00114,
+      "std_shap": 0.01342,
+      "rank": 7,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "mixed"
+    },
+    {
+      "feature_name": "latent_6",
+      "feature_index": 4,
+      "mean_abs_shap": 0.0042,
+      "mean_shap": 0.00351,
+      "std_shap": 0.00437,
+      "rank": 8,
+      "selected_by_qaoa": false,
+      "qaoa_rank": null,
+      "classical_importance": null,
+      "direction_trend": "positive_risk"
+    }
+  ],
+  "qaoa_vs_shap_comparison": [
+    {
+      "feature": "latent_8",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 6,
+      "shap_importance": 0.18332,
+      "shap_rank": 1,
+      "classical_importance": 0.0,
+      "alignment_note": "Divergent Attribution"
+    },
+    {
+      "feature": "latent_3",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 3,
+      "shap_importance": 0.07822,
+      "shap_rank": 2,
+      "classical_importance": 0.0,
+      "alignment_note": "High SHAP & QAOA Priority"
+    },
+    {
+      "feature": "latent_0",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 1,
+      "shap_importance": 0.01262,
+      "shap_rank": 3,
+      "classical_importance": 0.01094,
+      "alignment_note": "High SHAP & QAOA Priority"
+    },
+    {
+      "feature": "latent_4",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 4,
+      "shap_importance": 0.01253,
+      "shap_rank": 4,
+      "classical_importance": 0.00084,
+      "alignment_note": "Moderate Alignment"
+    },
+    {
+      "feature": "latent_1",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 2,
+      "shap_importance": 0.0115,
+      "shap_rank": 5,
+      "classical_importance": 0.01431,
+      "alignment_note": "Moderate Alignment"
+    },
+    {
+      "feature": "latent_9",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 7,
+      "shap_importance": 0.00783,
+      "shap_rank": 6,
+      "classical_importance": 0.00842,
+      "alignment_note": "Moderate Alignment"
+    },
+    {
+      "feature": "latent_14",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 8,
+      "shap_importance": 0.00737,
+      "shap_rank": 7,
+      "classical_importance": 0.00337,
+      "alignment_note": "Moderate Alignment"
+    },
+    {
+      "feature": "latent_6",
+      "selected_by_qaoa": true,
+      "qaoa_selection_rank": 5,
+      "shap_importance": 0.0042,
+      "shap_rank": 8,
+      "classical_importance": 0.00168,
+      "alignment_note": "Moderate Alignment"
+    }
+  ],
+  "faithfulness_summary": {
+    "cohort_faithfulness_rate": 1.0,
+    "samples": [
+      {
+        "sample_id": 1,
+        "original_probability": 0.1967,
+        "top_k_features": [
+          "latent_8",
+          "latent_3"
+        ],
+        "top_k_perturbed_probability": 0.3254,
+        "top_k_delta": 0.1287,
+        "least_k_features": [
+          "latent_0",
+          "latent_9"
+        ],
+        "least_k_perturbed_probability": 0.1995,
+        "least_k_delta": 0.0029,
+        "is_faithful": true
+      },
+      {
+        "sample_id": 2,
+        "original_probability": 0.5714,
+        "top_k_features": [
+          "latent_8",
+          "latent_3"
+        ],
+        "top_k_perturbed_probability": 0.3753,
+        "top_k_delta": 0.1962,
+        "least_k_features": [
+          "latent_4",
+          "latent_6"
+        ],
+        "least_k_perturbed_probability": 0.587,
+        "least_k_delta": 0.0155,
+        "is_faithful": true
+      },
+      {
+        "sample_id": 3,
+        "original_probability": 0.0563,
+        "top_k_features": [
+          "latent_8",
+          "latent_3"
+        ],
+        "top_k_perturbed_probability": 0.2744,
+        "top_k_delta": 0.2182,
+        "least_k_features": [
+          "latent_6",
+          "latent_9"
+        ],
+        "least_k_perturbed_probability": 0.0569,
+        "least_k_delta": 0.0006,
+        "is_faithful": true
+      }
+    ]
+  },
+  "stability_summary": {
+    "mean_coefficient_of_variation": 0.1006,
+    "stable_feature_ratio": 1.0,
+    "features": [
+      {
+        "feature_name": "latent_0",
+        "mean_importance": 0.01227,
+        "std_importance": 0.00052,
+        "coefficient_of_variation": 0.0427,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_1",
+        "mean_importance": 0.00804,
+        "std_importance": 0.00061,
+        "coefficient_of_variation": 0.0753,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_3",
+        "mean_importance": 0.07357,
+        "std_importance": 0.00122,
+        "coefficient_of_variation": 0.0166,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_4",
+        "mean_importance": 0.01126,
+        "std_importance": 0.0021,
+        "coefficient_of_variation": 0.1869,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_6",
+        "mean_importance": 0.0044,
+        "std_importance": 0.00134,
+        "coefficient_of_variation": 0.3045,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_8",
+        "mean_importance": 0.1704,
+        "std_importance": 0.00691,
+        "coefficient_of_variation": 0.0405,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_9",
+        "mean_importance": 0.00463,
+        "std_importance": 0.00054,
+        "coefficient_of_variation": 0.1174,
+        "is_stable": true
+      },
+      {
+        "feature_name": "latent_14",
+        "mean_importance": 0.00619,
+        "std_importance": 0.00013,
+        "coefficient_of_variation": 0.0205,
+        "is_stable": true
+      }
+    ]
+  },
+  "sanity_checks": {
+    "randomized_model_check_passed": false,
+    "pearson_correlation_with_randomized": 0.7677
+  },
+  "leakage_audit": {
+    "background_disjoint_from_val": true,
+    "background_disjoint_from_test": true,
+    "shap_values_finite": true,
+    "test_labels_unused_for_explanation": true
+  },
+  "artifacts": {
+    "feature_importance_csv": "C:\\Users\\adij7\\OneDrive\\Attachments\\Desktop\\MIndMatrix\\artifacts\\experiments\\config_d_qaoa_vqc_qgan_f79eee50ae94\\explainability\\feature_importance.csv",
+    "global_bar_plot": "C:\\Users\\adij7\\OneDrive\\Attachments\\Desktop\\MIndMatrix\\artifacts\\experiments\\config_d_qaoa_vqc_qgan_f79eee50ae94\\explainability\\global_feature_importance_bar.png",
+    "qaoa_comparison_plot": "C:\\Users\\adij7\\OneDrive\\Attachments\\Desktop\\MIndMatrix\\artifacts\\experiments\\config_d_qaoa_vqc_qgan_f79eee50ae94\\explainability\\qaoa_vs_shap_comparison.png",
+    "faithfulness_plot": "C:\\Users\\adij7\\OneDrive\\Attachments\\Desktop\\MIndMatrix\\artifacts\\experiments\\config_d_qaoa_vqc_qgan_f79eee50ae94\\explainability\\faithfulness_perturbation_check.png"
+  }
+}

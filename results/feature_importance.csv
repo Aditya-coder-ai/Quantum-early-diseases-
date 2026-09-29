@@ -1,0 +1,5 @@
+feature,selected_by_qaoa,qaoa_selection_rank,shap_importance,shap_rank,classical_importance,alignment_note
+latent_0,True,1,0.0,,0.0,Moderate Alignment
+latent_1,True,2,0.0,,0.0,Moderate Alignment
+latent_2,True,3,0.0,,0.0,Moderate Alignment
+latent_3,True,4,0.0,,0.0,Moderate Alignment

@@ -1,2 +1,2 @@
 experiment_id,configuration,feature_selection,imbalance_method,feature_count,qubits,circuit_depth,accuracy,precision,recall,specificity,f1,roc_auc,pr_auc,training_time,inference_time
-config_d_qaoa_vqc_qgan_f79eee50ae94,config_d_qaoa_vqc_qgan,qaoa,qgan,8,8,9,0.8953,0.8814,0.963,0.7812,0.9204,0.967,0.9804,41.1074,0.373
+test_e2e_aefaea47b3a7,test_e2e,qaoa,smote,4,4,5,0.7791,0.7465,0.9815,0.4375,0.848,0.8478,0.8911,2.6857,0.1033

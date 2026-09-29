@@ -224,6 +224,14 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_part7_pipeline.py
   ```
+- **Run Part 8 Model Explainability Runner:**
+  ```bash
+  python scripts/run_explainability.py
+  ```
+- **Run Part 8 Explainability Automated Test Suite (17/17 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part8_explainability.py
+  ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
   python -m pytest -v tests/test_pipeline.py
