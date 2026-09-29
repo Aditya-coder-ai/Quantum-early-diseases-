@@ -31,3 +31,5 @@ logs/
 # Local runner helpers
 powershell.cmd
 powershell.bat
+
+.freebuff/
