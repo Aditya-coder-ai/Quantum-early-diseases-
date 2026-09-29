@@ -192,6 +192,14 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_part4.py
   ```
+- **Run Part 5 Class Imbalance & Quantum GAN Experiment:**
+  ```bash
+  python scripts/run_part5.py
+  ```
+- **Run Part 5 Imbalance & QGAN Test Suite (19/19 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part5.py
+  ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
   python -m pytest -v tests/test_pipeline.py

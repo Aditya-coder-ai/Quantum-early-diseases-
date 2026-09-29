@@ -1,0 +1,15 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "accuracy_mean": 0.9882,
+  "accuracy_std": 0.0,
+  "f1_mean": 0.9907,
+  "f1_std": 0.0,
+  "minority_recall_mean": 0.9688,
+  "minority_recall_std": 0.0,
+  "roc_auc_mean": 0.9994,
+  "roc_auc_std": 0.0
+}

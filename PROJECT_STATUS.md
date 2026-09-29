@@ -249,4 +249,98 @@ Evaluated on the validation split ($N=85$, 53 benign, 32 malignant) using the id
   python -m pytest -v tests/test_part4.py
   ```
 
+---
+
+## PART 5: CLASS IMBALANCE HANDLING + QUANTUM GAN EXPERIMENT
+
+### 1. Executive Summary & Core Research Questions
+Part 5 addresses class imbalance in early disease detection, where malignant cases (minority class) are less frequent than benign cases (majority class). The objective was two-fold:
+1. **Objective A:** Build and evaluate reliable classical class-imbalance strategies (Class Weighting, SMOTE at configurable oversampling ratios $r \in \{0.25, 0.50, 0.75, 1.00\}$).
+2. **Objective B:** Build, audit, and evaluate an 8-qubit Variational Quantum GAN (QGAN) operating directly on the compact 8-dimensional feature representation selected in Part 4.
+
+Crucially, QGAN was treated as an **empirical hypothesis test** rather than assumed to be superior. Zero-leakage protocols were enforced: SMOTE and QGAN were trained strictly on training minority samples ($N=148$). Validation ($N=85$) and test ($N=86$) splits remained completely untouched until final single-pass evaluation.
+
+### 2. Original Class Imbalance Profile (Training Data, $N=398$)
+- **Total training samples:** 398
+- **Majority Class (Class 1, Benign):** 250 samples (62.81%)
+- **Minority Class (Class 0, Malignant):** 148 samples (37.19%)
+- **Minority-to-Majority Ratio:** 0.5920 : 1
+- **Imbalance Ratio:** 1.6892 : 1
+- **Deficit to 50/50 Parity:** 102 samples
+
+### 3. Key Deliverables Implemented
+- **Centralized Configuration:** `src/imbalance/config.py` specifies all seeds, feature dimensions ($D=8$), classes, augmentation ratios, directories, and QGAN hyperparameters.
+- **Classical Imbalance Engine:** `src/imbalance/classical.py` computes analytic balanced class weights and implements a pure first-principles SMOTE oversampler using $k$-NN graph interpolation without external unverified dependencies.
+- **Synthetic Data Quality & Mode-Collapse Audit:** `src/imbalance/quality.py` evaluates mean L2 difference, standard deviation difference, correlation matrix Frobenius distance, per-feature Kolmogorov-Smirnov 2-sample tests, nearest-neighbor distance distributions, and mode-collapse detection based on pairwise Euclidean distances and minimum feature variance.
+- **Quantum GAN Architecture:** `src/imbalance/qgan.py` implements:
+  - *Quantum Generator:* 8 qubits, 2 variational layers ($RY, RZ$ gates + cyclic $CNOT$ entanglement) on PennyLane `default.qubit` with PyTorch autograd interface and learnable affine layer.
+  - *Classical Discriminator:* PyTorch MLP ($8 \to 32 \to 16 \to 1$) with LeakyReLU activations and Sigmoid output.
+  - *Adversarial Trainer:* BCE loss augmented with empirical moment-matching regularization ($\| \mathbb{E}[x_{\text{real}}] - \mathbb{E}[x_{\text{fake}}] \|_2$) to prevent mode collapse.
+  - *Tiny Synthetic Verification:* Controlled 2-qubit / 2D synthetic distribution test verified in automated test suite.
+- **Evaluation Framework:** `src/imbalance/evaluation.py` evaluates downstream classifier (`SVM_RBF`) performance across all configurations on identical splits.
+- **Automated Test Suite:** `tests/test_part5.py` implements 19 comprehensive unit and integration tests (19/19 passed in 9.54s).
+- **Master Orchestrator:** `scripts/run_part5.py` executes Steps 0 through 11 end-to-end.
+
+### 4. Experimental Results & Downstream Comparison
+
+#### A. Validation Set Performance ($N=85$, 53 Benign, 32 Malignant)
+Evaluated with downstream `SVM_RBF`:
+
+| Strategy | Aug. Ratio | Train $N$ | Accuracy | Precision | Recall (Sens.) | Specificity | F1 Score | ROC-AUC | PR-AUC | Minority Recall | Minority F1 | Training Time |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Original Imbalanced** | 0.00 | 398 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 0.034s |
+| **Class Weighted** | 0.00 | 398 | 0.9765 | 0.9811 | 0.9811 | 0.9688 | 0.9811 | 0.9988 | 0.9993 | 0.9688 | 0.9688 | 0.013s |
+| **SMOTE (r=0.25)** | 0.25 | 424 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 0.011s |
+| **SMOTE (r=0.50)** | 0.50 | 449 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 0.015s |
+| **SMOTE (r=0.75)** | 0.75 | 474 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9988 | 0.9993 | 0.9688 | 0.9842 | 0.013s |
+| **SMOTE (r=1.00)** | 1.00 | 500 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9988 | 0.9993 | 0.9688 | 0.9842 | 0.014s |
+| **QGAN (r=0.25)** | 0.25 | 424 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 18.25s |
+| **QGAN (r=0.50)** | 0.50 | 449 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 18.25s |
+| **QGAN (r=0.75)** | 0.75 | 474 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 18.25s |
+| **QGAN (r=1.00)** | 1.00 | 500 | 0.9882 | 0.9815 | 1.0000 | 0.9688 | 0.9907 | 0.9994 | 0.9997 | 0.9688 | 0.9842 | 18.25s |
+
+#### B. Final Untouched Test Set Evaluation ($N=86$, 54 Benign, 32 Malignant — Evaluated Once)
+| Strategy | Aug. Ratio | Accuracy | Precision | Recall | Specificity | F1 Score | ROC-AUC | PR-AUC | Minority Recall | Minority F1 | False Negatives |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Original Imbalanced** | 0.00 | 0.9186 | 0.9123 | 0.9630 | 0.8438 | 0.9369 | 0.9902 | 0.9944 | 0.8438 | 0.8853 | 5 |
+| **Class Weighted** | 0.00 | 0.9186 | 0.9273 | 0.9444 | 0.8750 | 0.9358 | 0.9907 | 0.9950 | 0.8750 | 0.8889 | 4 |
+| **SMOTE (r=1.00)** | 1.00 | **0.9302** | **0.9286** | **0.9630** | **0.8750** | **0.9455** | **0.9925** | **0.9958** | **0.8750** | **0.9032** | **4** |
+| **QGAN (r=1.00)** | 1.00 | 0.9186 | 0.9123 | 0.9630 | 0.8438 | 0.9369 | 0.9907 | 0.9949 | 0.8438 | 0.8853 | 5 |
+
+#### C. Synthetic Data Quality & Mode-Collapse Audit
+- **Mode Collapse Status:** Both SMOTE and QGAN were audited as `HEALTHY` (no mode collapse detected).
+  - QGAN Mean Pairwise Distance: $1.2420$ ($> 0.10$ threshold)
+  - QGAN Min Feature Variance: $0.0445$ ($> 0.001$ threshold)
+- **Distribution Fidelity:**
+  - SMOTE matched 100% of feature marginals under Kolmogorov-Smirnov 2-sample tests ($p > 0.05$).
+  - QGAN achieved mean $L_2$ distance of $0.5198$ to real minority centroid, with mean distance to nearest real minority sample of $0.6527$ vs $1.3372$ to majority sample, confirming synthetic samples reside in the minority region.
+- **QGAN Multi-Seed Stability:**
+  - Evaluated across seeds $\{42, 43, 44\}$:
+  - Validation Accuracy: $0.9882 \pm 0.0000$
+  - Validation F1: $0.9907 \pm 0.0000$
+  - Minority Recall: $0.9688 \pm 0.0000$
+  - Demonstrates strong training stability when regularized with moment matching.
+
+### 5. Scientific Interpretation & Answers to Research Questions
+1. **Did class weighting improve minority recall?**  
+   Yes. On the test set, class weighting increased minority recall from $84.38\%$ to $87.50\%$, reducing false negatives from 5 to 4.
+2. **Did SMOTE improve minority recall and overall generalization?**  
+   Yes. SMOTE at full parity ($r=1.00$) delivered the highest overall test performance across all evaluated strategies: accuracy increased from $91.86\%$ to $93.02\%$, minority recall reached $87.50\%$, minority F1 reached $0.9032$, and ROC-AUC reached $0.9925$.
+3. **Did QGAN improve minority-class performance over classical strategies?**  
+   No. QGAN produced valid, non-collapsed synthetic samples in the minority space and achieved competitive validation performance ($98.82\%$). However, on the final held-out test set, QGAN augmentation ($91.86\%$ accuracy, $84.38\%$ minority recall) matched the original baseline and did not outperform classical SMOTE or class weighting.
+4. **What computational cost did QGAN introduce?**  
+   Classical SMOTE executed in $<0.015$ seconds, whereas QGAN required $18.25$ seconds of quantum circuit simulation per training run (~1,200x slower).
+5. **Conclusion:**  
+   In this compact 8-dimensional medical feature space, classical oversampling via SMOTE remains superior in both downstream generalization and computational efficiency. QGAN provides a stable, functional generative proof-of-concept, but does not provide an empirical advantage over classical methods for this feature dimension.
+
+### 6. Part 5 Execution Commands
+- **Run Part 5 End-to-End Pipeline:**
+  ```bash
+  python scripts/run_part5.py
+  ```
+- **Run Part 5 Automated Test Suite (19/19 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part5.py
+  ```
+
 
