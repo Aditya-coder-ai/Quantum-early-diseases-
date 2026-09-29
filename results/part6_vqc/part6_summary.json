@@ -1,0 +1,163 @@
+{
+  "status": "COMPLETE",
+  "timestamp": "2026-09-29 17:36:42",
+  "total_runtime_s": 1115.4,
+  "dataset": {
+    "feature_dim": 8,
+    "train_samples": 398,
+    "val_samples": 85,
+    "test_samples": 86,
+    "minority_class": 0,
+    "majority_class": 1
+  },
+  "vqc_architecture": {
+    "n_qubits": 8,
+    "n_layers": 2,
+    "ansatz": "ansatz_b",
+    "entanglement": "ring",
+    "parameters": 32,
+    "total_gates": 56,
+    "entangling_gates": 16,
+    "circuit_depth": 9,
+    "preferred_device": "lightning.qubit"
+  },
+  "training_convergence": {
+    "best_epoch": 20,
+    "total_epochs": 28,
+    "best_val_pr_auc": 0.9993,
+    "best_val_minority_recall": 0.9062
+  },
+  "validation_leaderboard": [
+    {
+      "method": "Classical_SVM_RBF",
+      "accuracy": 0.9765,
+      "f1": 0.9811,
+      "roc_auc": 0.9988,
+      "pr_auc": 0.9993,
+      "minority_recall": 0.9688
+    },
+    {
+      "method": "Classical_LogisticRegression",
+      "accuracy": 0.9882,
+      "f1": 0.9907,
+      "roc_auc": 0.9988,
+      "pr_auc": 0.9993,
+      "minority_recall": 0.9688
+    },
+    {
+      "method": "Classical_MLP",
+      "accuracy": 0.9882,
+      "f1": 0.9907,
+      "roc_auc": 0.9982,
+      "pr_auc": 0.9989,
+      "minority_recall": 0.9688
+    },
+    {
+      "method": "VQC_Original",
+      "accuracy": 0.9647,
+      "f1": 0.9725,
+      "roc_auc": 0.9953,
+      "pr_auc": 0.9971,
+      "minority_recall": 0.9062
+    },
+    {
+      "method": "VQC_Ansatz_B_Ring",
+      "accuracy": 0.9647,
+      "f1": 0.972,
+      "roc_auc": 0.9953,
+      "pr_auc": 0.9971,
+      "minority_recall": 0.9375
+    },
+    {
+      "method": "VQC_SMOTE",
+      "accuracy": 0.9647,
+      "f1": 0.9725,
+      "roc_auc": 0.9988,
+      "pr_auc": 0.9993,
+      "minority_recall": 0.9062
+    },
+    {
+      "method": "VQC_QGAN",
+      "accuracy": 0.9647,
+      "f1": 0.9725,
+      "roc_auc": 0.9941,
+      "pr_auc": 0.9963,
+      "minority_recall": 0.9062
+    }
+  ],
+  "final_test_leaderboard": [
+    {
+      "method": "Test_Classical_SVM_RBF",
+      "accuracy": 0.9186,
+      "f1": 0.9358,
+      "roc_auc": 0.9907,
+      "pr_auc": 0.995,
+      "minority_recall": 0.875,
+      "malignant_false_negatives": 4
+    },
+    {
+      "method": "Test_VQC_Original",
+      "accuracy": 0.907,
+      "f1": 0.9286,
+      "roc_auc": 0.9618,
+      "pr_auc": 0.9774,
+      "minority_recall": 0.8125,
+      "malignant_false_negatives": 6
+    },
+    {
+      "method": "Test_VQC_ClassWeighted",
+      "accuracy": 0.8721,
+      "f1": 0.8991,
+      "roc_auc": 0.9618,
+      "pr_auc": 0.9774,
+      "minority_recall": 0.8125,
+      "malignant_false_negatives": 6
+    },
+    {
+      "method": "Test_VQC_SMOTE",
+      "accuracy": 0.8953,
+      "f1": 0.9189,
+      "roc_auc": 0.963,
+      "pr_auc": 0.9778,
+      "minority_recall": 0.8125,
+      "malignant_false_negatives": 6
+    },
+    {
+      "method": "Test_VQC_QGAN",
+      "accuracy": 0.8953,
+      "f1": 0.9189,
+      "roc_auc": 0.9618,
+      "pr_auc": 0.977,
+      "minority_recall": 0.8125,
+      "malignant_false_negatives": 6
+    }
+  ],
+  "stability_summary": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "accuracy_mean": 0.9529,
+    "accuracy_std": 0.0118,
+    "f1_mean": 0.9622,
+    "f1_std": 0.0098,
+    "minority_recall_mean": 0.9375,
+    "minority_recall_std": 0.0,
+    "roc_auc_mean": 0.9947,
+    "roc_auc_std": 0.0016,
+    "pr_auc_mean": 0.9968,
+    "pr_auc_std": 0.0009
+  },
+  "noise_summary": {
+    "ideal_acc": 0.9647,
+    "shot_acc": 0.9765,
+    "depol_acc": 0.9647
+  },
+  "hardware_status": {
+    "hardware_executed": false,
+    "backend": "None",
+    "reason": "Simulator evaluation completed on PennyLane lightning.qubit and default.mixed; cloud quantum hardware credentials (e.g., IBM Quantum / Amazon Braket) are not configured in this environment.",
+    "verified_simulator": "lightning.qubit (statevector adjoint diff) & default.mixed (density matrix noise)"
+  }
+}

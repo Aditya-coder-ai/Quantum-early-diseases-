@@ -200,6 +200,14 @@ python scripts/run_pipeline.py
   ```bash
   python -m pytest -v tests/test_part5.py
   ```
+- **Run Part 6 Variational Quantum Classifier (VQC) Experiment:**
+  ```bash
+  python scripts/run_part6.py
+  ```
+- **Run Part 6 VQC Automated Test Suite (19/19 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part6.py
+  ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
   python -m pytest -v tests/test_pipeline.py
