@@ -1,0 +1,893 @@
+{
+  "paired_tests": {
+    "comparison": "Compact Classical (QAOA-SVM) vs Hybrid VQC + SMOTE",
+    "sample_size": 86,
+    "paired_t_test": {
+      "t_statistic": -6.0529,
+      "p_value": 0.0,
+      "statistically_significant_p05": true
+    },
+    "wilcoxon_test": {
+      "statistic": 307.0,
+      "p_value": 0.0,
+      "statistically_significant_p05": true
+    },
+    "mcnemar_test": {
+      "contingency_table": {
+        "both_correct": 75,
+        "both_wrong": 3,
+        "Compact Classical (QAOA-SVM)_only_correct (b)": 6,
+        "Hybrid VQC + SMOTE_only_correct (c)": 2
+      },
+      "chi2_statistic": 1.125,
+      "p_value": 0.288844,
+      "statistically_significant_p05": false
+    }
+  },
+  "multiseed_summary": {
+    "logreg_raw": {
+      "model_id": "logreg_raw",
+      "model_name": "Logistic Regression",
+      "model_family": "classical",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9884,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9884,
+          "max": 0.9884,
+          "formatted": "0.9884 \u00b1 0.0000"
+        },
+        "balanced_accuracy": {
+          "mean": 0.9844,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9844,
+          "max": 0.9844,
+          "formatted": "0.9844 \u00b1 0.0000"
+        },
+        "recall": {
+          "mean": 0.9688,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9688,
+          "max": 0.9688,
+          "formatted": "0.9688 \u00b1 0.0000"
+        },
+        "specificity": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "precision": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "f1": {
+          "mean": 0.9841,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9841,
+          "max": 0.9841,
+          "formatted": "0.9841 \u00b1 0.0000"
+        },
+        "roc_auc": {
+          "mean": 0.9954,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9954,
+          "max": 0.9954,
+          "formatted": "0.9954 \u00b1 0.0000"
+        },
+        "pr_auc": {
+          "mean": 0.9938,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9938,
+          "max": 0.9938,
+          "formatted": "0.9938 \u00b1 0.0000"
+        },
+        "false_negatives": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "training_time_s": {
+          "mean": 0.0103,
+          "std": 0.0034,
+          "ci95": 0.0042,
+          "min": 0.0057,
+          "max": 0.0143,
+          "formatted": "0.0103 \u00b1 0.0034"
+        },
+        "inference_latency_ms": {
+          "mean": 0.0038,
+          "std": 0.0028,
+          "ci95": 0.0035,
+          "min": 0.0013,
+          "max": 0.008,
+          "formatted": "0.0038 \u00b1 0.0028"
+        }
+      }
+    },
+    "svm_rbf_raw": {
+      "model_id": "svm_rbf_raw",
+      "model_name": "SVM (RBF)",
+      "model_family": "classical",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9349,
+          "std": 0.0064,
+          "ci95": 0.008,
+          "min": 0.9302,
+          "max": 0.9419,
+          "formatted": "0.9349 \u00b1 0.0064"
+        },
+        "balanced_accuracy": {
+          "mean": 0.9125,
+          "std": 0.0086,
+          "ci95": 0.0107,
+          "min": 0.9062,
+          "max": 0.9219,
+          "formatted": "0.9125 \u00b1 0.0086"
+        },
+        "recall": {
+          "mean": 0.825,
+          "std": 0.0171,
+          "ci95": 0.0213,
+          "min": 0.8125,
+          "max": 0.8438,
+          "formatted": "0.8250 \u00b1 0.0171"
+        },
+        "specificity": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "precision": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "f1": {
+          "mean": 0.9041,
+          "std": 0.0102,
+          "ci95": 0.0127,
+          "min": 0.8966,
+          "max": 0.9153,
+          "formatted": "0.9041 \u00b1 0.0102"
+        },
+        "roc_auc": {
+          "mean": 0.9959,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9959,
+          "max": 0.9959,
+          "formatted": "0.9959 \u00b1 0.0000"
+        },
+        "pr_auc": {
+          "mean": 0.9944,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9944,
+          "max": 0.9944,
+          "formatted": "0.9944 \u00b1 0.0000"
+        },
+        "false_negatives": {
+          "mean": 5.6,
+          "std": 0.5477,
+          "ci95": 0.6801,
+          "min": 5.0,
+          "max": 6.0,
+          "formatted": "5.6000 \u00b1 0.5477"
+        },
+        "training_time_s": {
+          "mean": 0.0126,
+          "std": 0.0039,
+          "ci95": 0.0049,
+          "min": 0.0082,
+          "max": 0.0175,
+          "formatted": "0.0126 \u00b1 0.0039"
+        },
+        "inference_latency_ms": {
+          "mean": 0.0107,
+          "std": 0.0044,
+          "ci95": 0.0055,
+          "min": 0.007,
+          "max": 0.0167,
+          "formatted": "0.0107 \u00b1 0.0044"
+        }
+      }
+    },
+    "rf_raw": {
+      "model_id": "rf_raw",
+      "model_name": "Random Forest",
+      "model_family": "classical",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9163,
+          "std": 0.0052,
+          "ci95": 0.0064,
+          "min": 0.907,
+          "max": 0.9186,
+          "formatted": "0.9163 \u00b1 0.0052"
+        },
+        "balanced_accuracy": {
+          "mean": 0.8951,
+          "std": 0.0042,
+          "ci95": 0.0052,
+          "min": 0.8877,
+          "max": 0.897,
+          "formatted": "0.8951 \u00b1 0.0042"
+        },
+        "recall": {
+          "mean": 0.8125,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.8125,
+          "max": 0.8125,
+          "formatted": "0.8125 \u00b1 0.0000"
+        },
+        "specificity": {
+          "mean": 0.9778,
+          "std": 0.0083,
+          "ci95": 0.0103,
+          "min": 0.963,
+          "max": 0.9815,
+          "formatted": "0.9778 \u00b1 0.0083"
+        },
+        "precision": {
+          "mean": 0.9561,
+          "std": 0.0154,
+          "ci95": 0.0191,
+          "min": 0.9286,
+          "max": 0.963,
+          "formatted": "0.9561 \u00b1 0.0154"
+        },
+        "f1": {
+          "mean": 0.8785,
+          "std": 0.0066,
+          "ci95": 0.0082,
+          "min": 0.8667,
+          "max": 0.8814,
+          "formatted": "0.8785 \u00b1 0.0066"
+        },
+        "roc_auc": {
+          "mean": 0.9793,
+          "std": 0.0019,
+          "ci95": 0.0024,
+          "min": 0.9774,
+          "max": 0.9821,
+          "formatted": "0.9793 \u00b1 0.0019"
+        },
+        "pr_auc": {
+          "mean": 0.968,
+          "std": 0.0025,
+          "ci95": 0.0031,
+          "min": 0.9656,
+          "max": 0.9714,
+          "formatted": "0.9680 \u00b1 0.0025"
+        },
+        "false_negatives": {
+          "mean": 6.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 6.0,
+          "max": 6.0,
+          "formatted": "6.0000 \u00b1 0.0000"
+        },
+        "training_time_s": {
+          "mean": 0.1649,
+          "std": 0.044,
+          "ci95": 0.0546,
+          "min": 0.1255,
+          "max": 0.2346,
+          "formatted": "0.1649 \u00b1 0.0440"
+        },
+        "inference_latency_ms": {
+          "mean": 0.1018,
+          "std": 0.0253,
+          "ci95": 0.0314,
+          "min": 0.0752,
+          "max": 0.1281,
+          "formatted": "0.1018 \u00b1 0.0253"
+        }
+      }
+    },
+    "mlp_raw": {
+      "model_id": "mlp_raw",
+      "model_name": "Classical MLP",
+      "model_family": "deep_learning",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9674,
+          "std": 0.0151,
+          "ci95": 0.0188,
+          "min": 0.9419,
+          "max": 0.9767,
+          "formatted": "0.9674 \u00b1 0.0151"
+        },
+        "balanced_accuracy": {
+          "mean": 0.9575,
+          "std": 0.0215,
+          "ci95": 0.0267,
+          "min": 0.9219,
+          "max": 0.9751,
+          "formatted": "0.9575 \u00b1 0.0215"
+        },
+        "recall": {
+          "mean": 0.9188,
+          "std": 0.0474,
+          "ci95": 0.0588,
+          "min": 0.8438,
+          "max": 0.9688,
+          "formatted": "0.9188 \u00b1 0.0474"
+        },
+        "specificity": {
+          "mean": 0.9963,
+          "std": 0.0083,
+          "ci95": 0.0103,
+          "min": 0.9815,
+          "max": 1.0,
+          "formatted": "0.9963 \u00b1 0.0083"
+        },
+        "precision": {
+          "mean": 0.9938,
+          "std": 0.014,
+          "ci95": 0.0173,
+          "min": 0.9688,
+          "max": 1.0,
+          "formatted": "0.9938 \u00b1 0.0140"
+        },
+        "f1": {
+          "mean": 0.9541,
+          "std": 0.0229,
+          "ci95": 0.0285,
+          "min": 0.9153,
+          "max": 0.9688,
+          "formatted": "0.9541 \u00b1 0.0229"
+        },
+        "roc_auc": {
+          "mean": 0.9938,
+          "std": 0.0013,
+          "ci95": 0.0016,
+          "min": 0.9925,
+          "max": 0.9954,
+          "formatted": "0.9938 \u00b1 0.0013"
+        },
+        "pr_auc": {
+          "mean": 0.9919,
+          "std": 0.0015,
+          "ci95": 0.0018,
+          "min": 0.99,
+          "max": 0.9938,
+          "formatted": "0.9919 \u00b1 0.0015"
+        },
+        "false_negatives": {
+          "mean": 2.6,
+          "std": 1.5166,
+          "ci95": 1.8831,
+          "min": 1.0,
+          "max": 5.0,
+          "formatted": "2.6000 \u00b1 1.5166"
+        },
+        "training_time_s": {
+          "mean": 0.2218,
+          "std": 0.0369,
+          "ci95": 0.0458,
+          "min": 0.1894,
+          "max": 0.274,
+          "formatted": "0.2218 \u00b1 0.0369"
+        },
+        "inference_latency_ms": {
+          "mean": 0.0023,
+          "std": 0.0004,
+          "ci95": 0.0005,
+          "min": 0.0018,
+          "max": 0.0028,
+          "formatted": "0.0023 \u00b1 0.0004"
+        }
+      }
+    },
+    "compact_svm_classical_fs": {
+      "model_id": "compact_svm_classical_fs",
+      "model_name": "Compact Classical (MI-SVM)",
+      "model_family": "compact_classical",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9535,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9535,
+          "max": 0.9535,
+          "formatted": "0.9535 \u00b1 0.0000"
+        },
+        "balanced_accuracy": {
+          "mean": 0.9375,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9375,
+          "max": 0.9375,
+          "formatted": "0.9375 \u00b1 0.0000"
+        },
+        "recall": {
+          "mean": 0.875,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.875,
+          "max": 0.875,
+          "formatted": "0.8750 \u00b1 0.0000"
+        },
+        "specificity": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "precision": {
+          "mean": 1.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "formatted": "1.0000 \u00b1 0.0000"
+        },
+        "f1": {
+          "mean": 0.9333,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9333,
+          "max": 0.9333,
+          "formatted": "0.9333 \u00b1 0.0000"
+        },
+        "roc_auc": {
+          "mean": 0.9826,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9826,
+          "max": 0.9826,
+          "formatted": "0.9826 \u00b1 0.0000"
+        },
+        "pr_auc": {
+          "mean": 0.9774,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9774,
+          "max": 0.9774,
+          "formatted": "0.9774 \u00b1 0.0000"
+        },
+        "false_negatives": {
+          "mean": 4.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 4.0,
+          "max": 4.0,
+          "formatted": "4.0000 \u00b1 0.0000"
+        },
+        "training_time_s": {
+          "mean": 0.0098,
+          "std": 0.0023,
+          "ci95": 0.0028,
+          "min": 0.0074,
+          "max": 0.0126,
+          "formatted": "0.0098 \u00b1 0.0023"
+        },
+        "inference_latency_ms": {
+          "mean": 0.0087,
+          "std": 0.0028,
+          "ci95": 0.0034,
+          "min": 0.006,
+          "max": 0.0117,
+          "formatted": "0.0087 \u00b1 0.0028"
+        }
+      }
+    },
+    "compact_svm_qaoa_fs": {
+      "model_id": "compact_svm_qaoa_fs",
+      "model_name": "Compact Classical (QAOA-SVM)",
+      "model_family": "compact_classical",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9419,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9419,
+          "max": 0.9419,
+          "formatted": "0.9419 \u00b1 0.0000"
+        },
+        "balanced_accuracy": {
+          "mean": 0.941,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.941,
+          "max": 0.941,
+          "formatted": "0.9410 \u00b1 0.0000"
+        },
+        "recall": {
+          "mean": 0.9375,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9375,
+          "max": 0.9375,
+          "formatted": "0.9375 \u00b1 0.0000"
+        },
+        "specificity": {
+          "mean": 0.9444,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9444,
+          "max": 0.9444,
+          "formatted": "0.9444 \u00b1 0.0000"
+        },
+        "precision": {
+          "mean": 0.9091,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9091,
+          "max": 0.9091,
+          "formatted": "0.9091 \u00b1 0.0000"
+        },
+        "f1": {
+          "mean": 0.9231,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9231,
+          "max": 0.9231,
+          "formatted": "0.9231 \u00b1 0.0000"
+        },
+        "roc_auc": {
+          "mean": 0.9902,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9902,
+          "max": 0.9902,
+          "formatted": "0.9902 \u00b1 0.0000"
+        },
+        "pr_auc": {
+          "mean": 0.9844,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 0.9844,
+          "max": 0.9844,
+          "formatted": "0.9844 \u00b1 0.0000"
+        },
+        "false_negatives": {
+          "mean": 2.0,
+          "std": 0.0,
+          "ci95": 0.0,
+          "min": 2.0,
+          "max": 2.0,
+          "formatted": "2.0000 \u00b1 0.0000"
+        },
+        "training_time_s": {
+          "mean": 0.0114,
+          "std": 0.0016,
+          "ci95": 0.002,
+          "min": 0.0087,
+          "max": 0.013,
+          "formatted": "0.0114 \u00b1 0.0016"
+        },
+        "inference_latency_ms": {
+          "mean": 0.011,
+          "std": 0.0025,
+          "ci95": 0.0032,
+          "min": 0.0076,
+          "max": 0.0147,
+          "formatted": "0.0110 \u00b1 0.0025"
+        }
+      }
+    },
+    "hybrid_vqc_original": {
+      "model_id": "hybrid_vqc_original",
+      "model_name": "Hybrid VQC (Unweighted)",
+      "model_family": "hybrid_vqc",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9,
+          "std": 0.0156,
+          "ci95": 0.0194,
+          "min": 0.8721,
+          "max": 0.907,
+          "formatted": "0.9000 \u00b1 0.0156"
+        },
+        "balanced_accuracy": {
+          "mean": 0.8809,
+          "std": 0.012,
+          "ci95": 0.0149,
+          "min": 0.86,
+          "max": 0.8877,
+          "formatted": "0.8809 \u00b1 0.0120"
+        },
+        "recall": {
+          "mean": 0.8062,
+          "std": 0.014,
+          "ci95": 0.0174,
+          "min": 0.7812,
+          "max": 0.8125,
+          "formatted": "0.8062 \u00b1 0.0140"
+        },
+        "specificity": {
+          "mean": 0.9556,
+          "std": 0.0281,
+          "ci95": 0.0349,
+          "min": 0.9074,
+          "max": 0.9815,
+          "formatted": "0.9556 \u00b1 0.0281"
+        },
+        "precision": {
+          "mean": 0.9172,
+          "std": 0.0461,
+          "ci95": 0.0573,
+          "min": 0.8387,
+          "max": 0.9615,
+          "formatted": "0.9172 \u00b1 0.0461"
+        },
+        "f1": {
+          "mean": 0.8575,
+          "std": 0.0181,
+          "ci95": 0.0224,
+          "min": 0.8254,
+          "max": 0.8667,
+          "formatted": "0.8575 \u00b1 0.0181"
+        },
+        "roc_auc": {
+          "mean": 0.9667,
+          "std": 0.0118,
+          "ci95": 0.0147,
+          "min": 0.9485,
+          "max": 0.9792,
+          "formatted": "0.9667 \u00b1 0.0118"
+        },
+        "pr_auc": {
+          "mean": 0.9513,
+          "std": 0.0152,
+          "ci95": 0.0189,
+          "min": 0.9281,
+          "max": 0.9701,
+          "formatted": "0.9513 \u00b1 0.0152"
+        },
+        "false_negatives": {
+          "mean": 6.2,
+          "std": 0.4472,
+          "ci95": 0.5553,
+          "min": 6.0,
+          "max": 7.0,
+          "formatted": "6.2000 \u00b1 0.4472"
+        },
+        "training_time_s": {
+          "mean": 51.4877,
+          "std": 16.5685,
+          "ci95": 20.5726,
+          "min": 26.5572,
+          "max": 64.3128,
+          "formatted": "51.4877 \u00b1 16.5685"
+        },
+        "inference_latency_ms": {
+          "mean": 3.8775,
+          "std": 0.5201,
+          "ci95": 0.6458,
+          "min": 3.2686,
+          "max": 4.6862,
+          "formatted": "3.8775 \u00b1 0.5201"
+        }
+      }
+    },
+    "hybrid_vqc_smote": {
+      "model_id": "hybrid_vqc_smote",
+      "model_name": "Hybrid VQC + SMOTE",
+      "model_family": "hybrid_vqc",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.893,
+          "std": 0.0224,
+          "ci95": 0.0278,
+          "min": 0.8605,
+          "max": 0.9186,
+          "formatted": "0.8930 \u00b1 0.0224"
+        },
+        "balanced_accuracy": {
+          "mean": 0.8728,
+          "std": 0.0191,
+          "ci95": 0.0237,
+          "min": 0.8501,
+          "max": 0.897,
+          "formatted": "0.8728 \u00b1 0.0191"
+        },
+        "recall": {
+          "mean": 0.7938,
+          "std": 0.0474,
+          "ci95": 0.0588,
+          "min": 0.7188,
+          "max": 0.8438,
+          "formatted": "0.7938 \u00b1 0.0474"
+        },
+        "specificity": {
+          "mean": 0.9519,
+          "std": 0.0483,
+          "ci95": 0.06,
+          "min": 0.8704,
+          "max": 0.9815,
+          "formatted": "0.9519 \u00b1 0.0483"
+        },
+        "precision": {
+          "mean": 0.9147,
+          "std": 0.073,
+          "ci95": 0.0906,
+          "min": 0.7941,
+          "max": 0.963,
+          "formatted": "0.9147 \u00b1 0.0730"
+        },
+        "f1": {
+          "mean": 0.8471,
+          "std": 0.027,
+          "ci95": 0.0336,
+          "min": 0.8182,
+          "max": 0.8814,
+          "formatted": "0.8471 \u00b1 0.0270"
+        },
+        "roc_auc": {
+          "mean": 0.9649,
+          "std": 0.0154,
+          "ci95": 0.0192,
+          "min": 0.9444,
+          "max": 0.9809,
+          "formatted": "0.9649 \u00b1 0.0154"
+        },
+        "pr_auc": {
+          "mean": 0.9492,
+          "std": 0.0203,
+          "ci95": 0.0253,
+          "min": 0.9209,
+          "max": 0.9725,
+          "formatted": "0.9492 \u00b1 0.0203"
+        },
+        "false_negatives": {
+          "mean": 6.6,
+          "std": 1.5166,
+          "ci95": 1.8831,
+          "min": 5.0,
+          "max": 9.0,
+          "formatted": "6.6000 \u00b1 1.5166"
+        },
+        "training_time_s": {
+          "mean": 49.5723,
+          "std": 19.7112,
+          "ci95": 24.4747,
+          "min": 28.3253,
+          "max": 77.5795,
+          "formatted": "49.5723 \u00b1 19.7112"
+        },
+        "inference_latency_ms": {
+          "mean": 3.7428,
+          "std": 0.6886,
+          "ci95": 0.855,
+          "min": 3.0989,
+          "max": 4.8281,
+          "formatted": "3.7428 \u00b1 0.6886"
+        }
+      }
+    },
+    "hybrid_vqc_qgan": {
+      "model_id": "hybrid_vqc_qgan",
+      "model_name": "Hybrid VQC + QGAN",
+      "model_family": "hybrid_vqc",
+      "n_seeds": 5,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.8884,
+          "std": 0.0268,
+          "ci95": 0.0333,
+          "min": 0.8488,
+          "max": 0.9186,
+          "formatted": "0.8884 \u00b1 0.0268"
+        },
+        "balanced_accuracy": {
+          "mean": 0.8729,
+          "std": 0.0204,
+          "ci95": 0.0253,
+          "min": 0.8414,
+          "max": 0.897,
+          "formatted": "0.8729 \u00b1 0.0204"
+        },
+        "recall": {
+          "mean": 0.8125,
+          "std": 0.0221,
+          "ci95": 0.0275,
+          "min": 0.7812,
+          "max": 0.8438,
+          "formatted": "0.8125 \u00b1 0.0221"
+        },
+        "specificity": {
+          "mean": 0.9333,
+          "std": 0.0483,
+          "ci95": 0.06,
+          "min": 0.8704,
+          "max": 0.9815,
+          "formatted": "0.9333 \u00b1 0.0483"
+        },
+        "precision": {
+          "mean": 0.8846,
+          "std": 0.0765,
+          "ci95": 0.095,
+          "min": 0.7879,
+          "max": 0.963,
+          "formatted": "0.8846 \u00b1 0.0765"
+        },
+        "f1": {
+          "mean": 0.8452,
+          "std": 0.0303,
+          "ci95": 0.0377,
+          "min": 0.8,
+          "max": 0.8814,
+          "formatted": "0.8452 \u00b1 0.0303"
+        },
+        "roc_auc": {
+          "mean": 0.9682,
+          "std": 0.0137,
+          "ci95": 0.017,
+          "min": 0.9462,
+          "max": 0.9803,
+          "formatted": "0.9682 \u00b1 0.0137"
+        },
+        "pr_auc": {
+          "mean": 0.9556,
+          "std": 0.0169,
+          "ci95": 0.0209,
+          "min": 0.9277,
+          "max": 0.971,
+          "formatted": "0.9556 \u00b1 0.0169"
+        },
+        "false_negatives": {
+          "mean": 6.0,
+          "std": 0.7071,
+          "ci95": 0.878,
+          "min": 5.0,
+          "max": 7.0,
+          "formatted": "6.0000 \u00b1 0.7071"
+        },
+        "training_time_s": {
+          "mean": 60.2401,
+          "std": 25.0727,
+          "ci95": 31.1319,
+          "min": 27.604,
+          "max": 79.0216,
+          "formatted": "60.2401 \u00b1 25.0727"
+        },
+        "inference_latency_ms": {
+          "mean": 4.5668,
+          "std": 0.8725,
+          "ci95": 1.0833,
+          "min": 3.4879,
+          "max": 5.7476,
+          "formatted": "4.5668 \u00b1 0.8725"
+        }
+      }
+    }
+  }
+}

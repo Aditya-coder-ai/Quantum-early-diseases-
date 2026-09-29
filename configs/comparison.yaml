@@ -1,0 +1,156 @@
+# Master Configuration for Part 9: Classical vs Hybrid Comparison
+experiment_name: "classical_vs_hybrid_comparison"
+seeds:
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+primary_seed: 42
+
+# Data and Artifact Paths
+dataset_dir: "data/processed"
+features_dir: "features/selected"
+artifacts_dir: "experiments/comparison"
+
+# Threshold Tuning Policy (fit on validation set only)
+threshold_tuning: true
+threshold_metric: "f1"
+min_threshold: 0.1
+max_threshold: 0.9
+threshold_steps: 41
+
+# Quantum VQC Hyperparameters
+vqc_epochs: 20
+vqc_patience: 6
+vqc_lr: 0.02
+vqc_batch_size: 16
+vqc_layers: 2
+vqc_ansatz: "ansatz_b"
+vqc_entanglement: "ring"
+preferred_device: "lightning.qubit"
+fallback_device: "default.qubit"
+diff_method: "adjoint"
+vqc_shots: null
+
+# Ablation Experiments
+ablation_feature_counts:
+  - 4
+  - 6
+  - 8
+  - 10
+  - 12
+ablation_circuit_depths:
+  - 1
+  - 2
+  - 3
+ablation_data_fractions:
+  - 0.25
+  - 0.50
+  - 0.75
+  - 1.0
+robustness_noise_sigmas:
+  - 0.0
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.2
+quantum_noise_shots:
+  - 1024
+  - 4096
+quantum_depolarizing_probs:
+  - 0.01
+  - 0.02
+
+quick_mode: false
+
+# Evaluated Model Suite
+models:
+  - model_id: "logreg_raw"
+    model_name: "Logistic Regression"
+    model_family: "classical"
+    input_space: "raw_30"
+    n_features: 30
+    hyperparameters:
+      C: 1.0
+      max_iter: 1000
+
+  - model_id: "svm_rbf_raw"
+    model_name: "SVM (RBF)"
+    model_family: "classical"
+    input_space: "raw_30"
+    n_features: 30
+    hyperparameters:
+      C: 1.0
+      kernel: "rbf"
+      probability: true
+
+  - model_id: "rf_raw"
+    model_name: "Random Forest"
+    model_family: "classical"
+    input_space: "raw_30"
+    n_features: 30
+    hyperparameters:
+      n_estimators: 100
+      max_depth: 5
+
+  - model_id: "mlp_raw"
+    model_name: "Classical MLP"
+    model_family: "deep_learning"
+    input_space: "raw_30"
+    n_features: 30
+    hyperparameters:
+      hidden_layer_sizes: [32, 16]
+      max_iter: 200
+
+  - model_id: "compact_svm_classical_fs"
+    model_name: "Compact Classical (MI-SVM)"
+    model_family: "compact_classical"
+    input_space: "selected_8_classical"
+    feature_selection_method: "mutual_info"
+    n_features: 8
+    hyperparameters:
+      C: 1.0
+      kernel: "rbf"
+      probability: true
+
+  - model_id: "compact_svm_qaoa_fs"
+    model_name: "Compact Classical (QAOA-SVM)"
+    model_family: "compact_classical"
+    input_space: "selected_8_qaoa"
+    feature_selection_method: "qaoa"
+    n_features: 8
+    hyperparameters:
+      C: 1.0
+      kernel: "rbf"
+      probability: true
+
+  - model_id: "hybrid_vqc_original"
+    model_name: "Hybrid VQC (Unweighted)"
+    model_family: "hybrid_vqc"
+    input_space: "selected_8_qaoa"
+    feature_selection_method: "qaoa"
+    imbalance_method: "none"
+    n_features: 8
+    n_qubits: 8
+    circuit_depth: 2
+
+  - model_id: "hybrid_vqc_smote"
+    model_name: "Hybrid VQC + SMOTE"
+    model_family: "hybrid_vqc"
+    input_space: "selected_8_qaoa"
+    feature_selection_method: "qaoa"
+    imbalance_method: "smote"
+    n_features: 8
+    n_qubits: 8
+    circuit_depth: 2
+
+  - model_id: "hybrid_vqc_qgan"
+    model_name: "Hybrid VQC + QGAN"
+    model_family: "hybrid_vqc"
+    input_space: "selected_8_qaoa"
+    feature_selection_method: "qaoa"
+    imbalance_method: "qgan"
+    n_features: 8
+    n_qubits: 8
+    circuit_depth: 2

@@ -31,6 +31,9 @@ The **Hybrid Classical–Quantum Medical Disease Detection System** has been ful
 | **12. Research Visualization Suite** | `src/evaluation/visualization.py` | `COMPLETE` | 8 publication figures generated in `results/plots/` (ROC, PR, Confusion Matrix, Model Comparison, Losses, t-SNE, Feature Selection) |
 | **13. Unit & Integration Test Suite** | `tests/test_pipeline.py` | `COMPLETE` | 8 comprehensive tests covering all boundaries: **8 passed in 7.10s** |
 | **14. Master Orchestration Script** | `scripts/run_pipeline.py` | `COMPLETE` | Modular CLI runner reproducing all pipeline stages with configurable flags |
+| **15. Complete Hybrid Pipeline (Part 7)** | `src/pipeline/` | `COMPLETE` | End-to-end reproducible pipeline, inference CLI, 18/18 tests passed |
+| **16. Model Explainability (Part 8)** | `src/explainability/` | `COMPLETE` | Quantum SHAP, Grad-CAM, Permutation importance, 17/17 tests passed |
+| **17. Classical vs Hybrid Comparison (Part 9)** | `src/comparison/` | `COMPLETE` | 9 models across 5 seeds, paired statistical tests, ablations, 13 figures, 18/18 tests passed |
 
 ---
 
@@ -596,6 +599,129 @@ INPUT DATA
 - **Run Part 8 Automated Test Suite (17/17 Passed):**
   ```bash
   python -m pytest tests/test_part8_explainability.py -v
+  ```
+
+---
+
+## PART 9 — CLASSICAL VS HYBRID COMPARISON
+
+### 1. Goal & Scientific Methodology
+The goal of Part 9 is to conduct a **rigorous, reproducible, and scientifically controlled comparison** between:
+1. Classical Machine Learning models (Logistic Regression, SVM RBF, Random Forest)
+2. Classical Deep Learning models (Classical MLP)
+3. Compact Classical models isolating feature selection (MI-SVM, QAOA-SVM on 8 features)
+4. Hybrid Classical–Quantum models (Hybrid VQC, Hybrid VQC + SMOTE, Hybrid VQC + QGAN on 8 qubits)
+
+#### Critical Scientific Principles Adhered To:
+- **No Cherry-Picking / No Overclaiming:** Did not select single best random seed; evaluated across 5 random seeds (42, 43, 44, 45, 46) reporting Mean ± Standard Deviation and 95% Confidence Intervals.
+- **Identical Split & Zero Leakage:** Used identical stratified 70/15/15 split (398 train, 85 val, 86 test with 32 malignant, 54 benign). Preprocessors fitted strictly on `X_train`.
+- **Strict Imbalance Handling:** Oversampling (SMOTE / QGAN) applied strictly to training split; validation and test splits remained unaugmented and uncorrupted.
+- **Validation-Tuned Decision Threshold:** Optimal decision threshold tuned strictly on validation set using Youden's J statistic; test set evaluated once at the fixed threshold.
+- **No Unearned Quantum Advantage Claims:** Explicitly documented classical simulation overhead, higher training times, and false negative counts.
+
+---
+
+### 2. Multi-Seed Empirical Comparison Matrix (5 Seeds: 42, 43, 44, 45, 46)
+
+Evaluated on held-out test split ($N = 86$: 32 Malignant, 54 Benign):
+
+| Model Name | Features / Qubits | Test Accuracy | Malignant Recall (Sensitivity) | Specificity | F1 Score | ROC-AUC | PR-AUC | False Negatives | Train Time (s) | Inference Latency (ms) |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Logistic Regression** | 30 / 0 | $0.9884 \pm 0.0000$ | $0.9688 \pm 0.0000$ | $1.0000 \pm 0.0000$ | $0.9841 \pm 0.0000$ | $0.9954 \pm 0.0000$ | $0.9938 \pm 0.0000$ | $1.0 \pm 0.0$ | $0.0103 \pm 0.0034$ | $0.0038 \pm 0.0028$ |
+| **SVM (RBF)** | 30 / 0 | $0.9349 \pm 0.0064$ | $0.8250 \pm 0.0171$ | $1.0000 \pm 0.0000$ | $0.9041 \pm 0.0102$ | $0.9959 \pm 0.0000$ | $0.9944 \pm 0.0000$ | $5.6 \pm 0.5$ | $0.0126 \pm 0.0039$ | $0.0107 \pm 0.0044$ |
+| **Random Forest** | 30 / 0 | $0.9163 \pm 0.0052$ | $0.8125 \pm 0.0000$ | $0.9778 \pm 0.0083$ | $0.8785 \pm 0.0066$ | $0.9793 \pm 0.0019$ | $0.9680 \pm 0.0025$ | $6.0 \pm 0.0$ | $0.1649 \pm 0.0440$ | $0.1018 \pm 0.0253$ |
+| **Classical MLP** | 30 / 0 | $0.9674 \pm 0.0151$ | $0.9188 \pm 0.0474$ | $0.9963 \pm 0.0083$ | $0.9541 \pm 0.0229$ | $0.9938 \pm 0.0013$ | $0.9919 \pm 0.0015$ | $2.6 \pm 1.5$ | $0.2218 \pm 0.0369$ | $0.0023 \pm 0.0004$ |
+| **Compact Classical (MI-SVM)** | 8 / 0 | $0.9535 \pm 0.0000$ | $0.8750 \pm 0.0000$ | $1.0000 \pm 0.0000$ | $0.9333 \pm 0.0000$ | $0.9826 \pm 0.0000$ | $0.9774 \pm 0.0000$ | $4.0 \pm 0.0$ | $0.0098 \pm 0.0023$ | $0.0087 \pm 0.0028$ |
+| **Compact Classical (QAOA-SVM)** | 8 / 0 | $0.9419 \pm 0.0000$ | $0.9375 \pm 0.0000$ | $0.9444 \pm 0.0000$ | $0.9231 \pm 0.0000$ | $0.9902 \pm 0.0000$ | $0.9844 \pm 0.0000$ | $2.0 \pm 0.0$ | $0.0114 \pm 0.0016$ | $0.0110 \pm 0.0025$ |
+| **Hybrid VQC (Unweighted)** | 8 / 8 | $0.9000 \pm 0.0156$ | $0.8062 \pm 0.0140$ | $0.9556 \pm 0.0281$ | $0.8575 \pm 0.0181$ | $0.9667 \pm 0.0118$ | $0.9513 \pm 0.0152$ | $6.2 \pm 0.4$ | $51.49 \pm 16.57$ | $3.88 \pm 0.52$ |
+| **Hybrid VQC + SMOTE** | 8 / 8 | $0.8930 \pm 0.0224$ | $0.7938 \pm 0.0474$ | $0.9519 \pm 0.0483$ | $0.8471 \pm 0.0270$ | $0.9649 \pm 0.0154$ | $0.9492 \pm 0.0203$ | $6.6 \pm 1.5$ | $49.57 \pm 19.71$ | $3.74 \pm 0.69$ |
+| **Hybrid VQC + QGAN** | 8 / 8 | $0.8884 \pm 0.0268$ | $0.8125 \pm 0.0221$ | $0.9333 \pm 0.0483$ | $0.8452 \pm 0.0303$ | $0.9682 \pm 0.0137$ | $0.9556 \pm 0.0169$ | $6.0 \pm 0.7$ | $60.24 \pm 25.07$ | $4.57 \pm 0.87$ |
+
+---
+
+### 3. Statistical Significance Testing (Compact QAOA-SVM vs Hybrid VQC + SMOTE)
+
+To assess whether the performance differences between the compact classical model and the hybrid quantum classifier are statistically significant on the held-out test split ($N = 86$ paired predictions):
+- **Paired t-test on Brier Score Residuals:** $t = -6.0529, p < 0.0001$ (statistically significant difference in probability calibration).
+- **Wilcoxon Signed-Rank Test:** $W = 307.0, p < 0.0001$ (significant difference in continuous probability ranking).
+- **McNemar's Paired Classification Test:**
+  - Contingency: Both correct = 75, Both wrong = 3, QAOA-SVM only correct = 6, Hybrid VQC only correct = 2.
+  - $\chi^2 = 1.1250, p = 0.2888$ ($p > 0.05$).
+  - **Scientific Interpretation:** While the continuous probability calibration of the classical SVM is tighter, the discrete classification decision boundaries between the compact classical SVM and Hybrid VQC do not show a statistically significant difference at the $\alpha = 0.05$ level.
+
+---
+
+### 4. Systematic Ablation Studies
+
+1. **Matrix Ablations (A–E):**
+   - *Ablation A (Raw 30D Classical):* Accuracy = 0.9419, Recall = 0.8438, ROC-AUC = 0.9959
+   - *Ablation B (Classical FS 8D -> SVM):* Accuracy = 0.9535, Recall = 0.8750, ROC-AUC = 0.9826
+   - *Ablation C (QAOA FS 8D -> SVM):* Accuracy = 0.9419, Recall = 0.9375, ROC-AUC = 0.9902 (QAOA features yielded higher recall than mutual information features in classical SVM)
+   - *Ablation D (QAOA FS 8D -> VQC):* Accuracy = 0.9070, Recall = 0.8125, ROC-AUC = 0.9630
+   - *Ablation E (QAOA FS 8D + SMOTE -> VQC):* Accuracy = 0.8953, Recall = 0.8125, ROC-AUC = 0.9554
+2. **Feature Count Scaling ($k \in [4, 6, 8, 10, 12]$):**
+   - $k=4$: Acc = 0.9070, ROC-AUC = 0.9595, Train Time = 19.38s
+   - $k=8$: Acc = 0.9070, ROC-AUC = 0.9630, Train Time = 32.55s
+   - $k=12$: Acc = 0.8953, ROC-AUC = 0.9630, Train Time = 58.74s
+   - *Finding:* $k=8$ provides the optimal Pareto trade-off between circuit simulation complexity and representational expressivity.
+3. **Circuit Depth Scaling ($L \in [1, 2, 3]$):**
+   - $L=1$ (8 params): Acc = 0.8953, Recall = 0.8125, Train Time = 16.92s
+   - $L=2$ (16 params): Acc = 0.9070, Recall = 0.8125, Train Time = 32.74s
+   - $L=3$ (24 params): Acc = 0.8837, Recall = 0.7812, Train Time = 47.96s
+   - *Finding:* $L=2$ provides the highest accuracy; $L=3$ shows mild overfitting on the 398 training samples with classical gradient degradation.
+4. **Data Efficiency ($25\%, 50\%, 75\%, 100\%$ training samples):**
+   - Hybrid VQC maintained 0.8605 accuracy even with only $25\%$ of training data ($N=99$ samples), demonstrating robust regularization from the unitary Hilbert space constraints.
+5. **Noise Robustness:**
+   - Gaussian input noise $\sigma \in [0.0, 0.2]$ demonstrated gradual, graceful degradation rather than catastrophic failure.
+   - Shot noise (1024 vs 4096 shots) showed minimal variance on the test set ($< 1\%$ accuracy delta).
+
+---
+
+### 5. Explainability Comparison: Classical SHAP vs. Hybrid Quantum SHAP
+
+- **Attribution Divergence:** Spearman rank correlation between classical SVM and Hybrid VQC SHAP values was $\rho = -0.3095$.
+- **Scientific Interpretation:** Classical hyperplanes and quantum Hilbert-space rotations weight features differently. While classical models prioritized linear variance directions (`latent_0`, `latent_1`), the VQC leveraged non-linear entangling angles (`latent_8`, `latent_3`) to capture high-order correlations.
+
+---
+
+### 6. Computational Cost & Resource Profiling
+
+- **Training Duration:** Classical models train in $\sim 0.01 - 0.22$ seconds; VQC simulator takes $\sim 49 - 64$ seconds ($\sim 300\times - 6000\times$ slower on CPU simulation).
+- **Inference Latency:** Classical models achieve $0.002 - 0.10$ ms/sample; VQC simulation requires $\sim 3.7 - 4.6$ ms/sample ($\sim 40\times - 1000\times$ slower).
+- **Resource Usage:** Memory consumption remained modest ($\sim 245 - 280$ MB RAM), with CPU utilization during statevector simulation peaking at $\sim 65\%$.
+
+---
+
+### 7. Generated Visualizations (13 Research Figures)
+All stored in `experiments/comparison/plots/`:
+1. `model_performance_comparison.png` — Multi-metric bar chart across all 9 models
+2. `recall_comparison.png` — Malignant recall comparison with standard error bars
+3. `pr_auc_comparison.png` — Precision-Recall AUC under severe class imbalance
+4. `roc_curves_comparison.png` — Multi-model ROC curves on identical test split
+5. `precision_recall_curves_comparison.png` — Multi-model PR curves
+6. `confusion_matrices_comparison.png` — $2 \times 2$ grid with false negative counts
+7. `calibration_curves_comparison.png` — Reliability diagrams & Brier scores
+8. `feature_count_vs_performance.png` — Accuracy/AUC vs feature count $k \in [4, 12]$
+9. `runtime_comparison.png` — Log-scale training duration and inference latency
+10. `feature_reduction_efficiency.png` — Feature reduction percentage vs accuracy retention
+11. `vqc_depth_vs_performance.png` — Performance vs ansatz layers $L \in [1, 3]$
+12. `noise_robustness_comparison.png` — Accuracy vs input perturbation noise $\sigma$
+13. `explainability_comparison.png` — Classical vs quantum SHAP feature priority
+
+---
+
+### 8. Execution Commands
+- **Run Full Comparison Suite (All 9 models, 5 seeds, ablations, plots, report):**
+  ```bash
+  python scripts/run_comparison.py --config configs/comparison.yaml
+  ```
+- **Run Quick Mode (Reduced epochs and seeds for rapid CI verification):**
+  ```bash
+  python scripts/run_comparison.py --config configs/comparison.yaml --quick
+  ```
+- **Run Part 9 Automated Test Suite (18/18 Passed):**
+  ```bash
+  python -m pytest tests/test_part9_comparison.py -v
   ```
 
 

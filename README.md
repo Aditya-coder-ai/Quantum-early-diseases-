@@ -112,7 +112,9 @@ MIndMatrix/
 │       └── visualization.py      # Publication-quality plotting suite
 ├── tests/
 │   ├── test_pipeline.py          # Comprehensive 8-stage boundary and integration tests
-│   └── test_vqc_benchmark.py     # Quantum simulator latency and gradient benchmark
+│   ├── test_part7_pipeline.py    # Integration tests for end-to-end hybrid pipeline
+│   ├── test_part8_explainability.py # Unit and integration tests for explainability
+│   └── test_part9_comparison.py  # 18 comprehensive tests for Part 9 comparison suite
 ├── requirements.txt              # Pinned Python package dependencies
 ├── DATASET_CARD.md               # Detailed clinical dataset documentation
 ├── PROJECT_STATUS.md             # Engineering status, diagnosis, and validation logs
@@ -231,6 +233,14 @@ python scripts/run_pipeline.py
 - **Run Part 8 Explainability Automated Test Suite (17/17 Passed):**
   ```bash
   python -m pytest -v tests/test_part8_explainability.py
+  ```
+- **Run Part 9 Classical vs Hybrid Comparison Benchmark (5 Seeds, 9 Models, Ablations, Visualizations):**
+  ```bash
+  python scripts/run_comparison.py --config configs/comparison.yaml
+  ```
+- **Run Part 9 Comparison Automated Test Suite (18/18 Passed):**
+  ```bash
+  python -m pytest -v tests/test_part9_comparison.py
   ```
 - **Run Full Pipeline Integration Tests (8/8 Passed):**
   ```bash
