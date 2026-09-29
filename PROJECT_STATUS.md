@@ -34,6 +34,7 @@ The **Hybrid Classical–Quantum Medical Disease Detection System** has been ful
 | **15. Complete Hybrid Pipeline (Part 7)** | `src/pipeline/` | `COMPLETE` | End-to-end reproducible pipeline, inference CLI, 18/18 tests passed |
 | **16. Model Explainability (Part 8)** | `src/explainability/` | `COMPLETE` | Quantum SHAP, Grad-CAM, Permutation importance, 17/17 tests passed |
 | **17. Classical vs Hybrid Comparison (Part 9)** | `src/comparison/` | `COMPLETE` | 9 models across 5 seeds, paired statistical tests, ablations, 13 figures, 18/18 tests passed |
+| **18. Privacy, Security & Safe Medical Data Handling (Part 10)** | `src/security/` | `COMPLETE` | De-identification, secret scan, audit trail, input validation, RBAC foundation, artifact integrity |
 
 ---
 
@@ -723,6 +724,69 @@ All stored in `experiments/comparison/plots/`:
   ```bash
   python -m pytest tests/test_part9_comparison.py -v
   ```
+
+---
+
+## Part 10: Privacy, Security & Safe Medical Data Handling
+
+### 1. Implementation Overview
+Part 10 implements a complete, healthcare-conscious privacy, security, and safe data handling foundation for the MIndMatrix hybrid classical-quantum medical platform. Built specifically for an oncology AI research prototype, it enforces strict data isolation and security controls without introducing extraneous latency into core tensor and quantum circuit operations.
+
+### 2. Core Architecture & Modules
+- **`src/security/data_protection.py` (Data Protection & De-identification):**
+  - **PHI Identifier Detection:** `detect_identifier_columns()` evaluates 22 regular expression patterns matching direct healthcare identifiers (`patient_id`, `mrn`, `name`, `dob`, `ssn`, `phone`, `email`, `hospital_id`, etc.).
+  - **Zero-PHI Hard Gate:** `validate_no_identifiers()` strictly rejects any dataset containing identity columns before training or inference.
+  - **Identifier Stripping:** `strip_identifiers()` removes sensitive identity columns, returning a sanitized feature matrix.
+  - **Deterministic Pseudonymization:** `pseudonymize_identifier()` uses HMAC-SHA256 with an environment-isolated salt (`PSEUDONYMIZATION_SALT`) to produce non-reversible, deterministic tokens (`SUBJ_<hex16>`) for patient longitudinal tracking.
+  - **Data Classification:** Categorizes all repository data items into `PUBLIC`, `INTERNAL`, `SENSITIVE`, and `HIGHLY_SENSITIVE`.
+  - **Data Inventory:** Programmatically generates a complete audit table of all datasets, models, logs, and configurations.
+
+- **`src/security/secrets.py` (Secret Management & Secure Configuration):**
+  - **Secret Scanner:** `scan_project_for_secrets()` scans source trees for hardcoded API keys, private keys, database URLs, and bearer tokens.
+  - **Environment-Only Secrets:** `get_secret()` queries credentials strictly from OS environment variables or an uncommitted `.env` file.
+  - **`.env.example` Validator:** Verifies template configuration contains no active credentials.
+  - **`SecureConfig` Class:** Decouples public hyperparameters (safe to log) from sensitive secrets (masked with `[REDACTED]`).
+
+- **`src/security/audit.py` (Secure Logging & Audit Trail):**
+  - **Sensitive Data Filter:** `SensitiveDataFilter` intercepts all log records in real time and redacts matching patterns (`patient_id`, `api_key`, `password`, `ssn`) with `[REDACTED]`.
+  - **Append-Only Audit Logger:** `AuditLogger` writes immutable JSON-lines to `logs/audit.log` recording security events (`DATASET_ACCESS`, `MODEL_LOADED`, `PREDICTION_REQUEST`, `AUTH_SUCCESS`, `AUTH_FAILURE`, `SECURITY_SCAN`). Raw patient data is never logged.
+
+- **`src/security/validation.py` (Input Validation & API Hardening):**
+  - **Structural Validation:** `validate_prediction_input()` validates dimension matching (30 features), numeric types, and array formats (dict, list, DataFrame, ndarray).
+  - **Boundary & Anomaly Defense:** Rejects `NaN`, `None`, and `±Inf` values. Enforces `MAX_BATCH_SIZE = 1000` against Denial-of-Service (DoS).
+  - **Physiological Bounds:** Evaluates clinical features against biological feasibility ranges (0 to 5× UCI WDBC observed maximums).
+  - **Information Disclosure Defense:** `safe_error_response()` returns clean error summaries without exposing internal file paths or stack traces.
+
+- **`src/security/auth.py` (Authentication & RBAC Foundation):**
+  - **HMAC-SHA256 Tokens:** Generates and cryptographically verifies development tokens (`user:role:signature`), rejecting tampered payloads.
+  - **Least-Privilege Roles:**
+    - `INFERENCE_USER`: `REQUEST_PREDICTION`, `VIEW_MODEL_METADATA`
+    - `RESEARCHER`: `REQUEST_PREDICTION`, `RUN_TRAINING`, `ACCESS_EXPERIMENT_DATA`, `ACCESS_TRAINING_METRICS`
+    - `ADMIN`: Full access to configuration, models, audit logs, and user management.
+  - **Authorization Engine:** `check_authorization()` enforces fine-grained permission checks.
+
+- **`src/security/policies.py` (Model Artifact Security & Policy Enforcement):**
+  - **Cryptographic Hashes:** `compute_file_hash()` calculates SHA-256 integrity checksums.
+  - **Manifest Generation:** `generate_artifact_manifest()` exports `models/artifact_manifest.json`.
+  - **Pickle Safety Assurance:** Acknowledges pickle/joblib arbitrary code execution risks and enforces a local **Trusted Artifact Directory** (`models/`, `artifacts/`).
+  - **`.gitignore` Compliance:** `check_gitignore_compliance()` verifies that `.env`, `*.log`, and `logs/` are strictly unversioned.
+
+### 3. Verification & Execution Commands
+- **Run Standalone Security & Privacy Audit:**
+  ```bash
+  python scripts/run_security_audit.py
+  ```
+- **Run Part 10 Automated Test Suite:**
+  ```bash
+  python -m pytest tests/test_part10_security.py -v
+  ```
+- **Run Secure Inference CLI with Automatic Identifier Stripping:**
+  ```bash
+  python scripts/predict.py --sample-patient
+  python scripts/predict.py --input data/patients.csv --output results/predictions.csv
+  ```
+- **Audit Documentation Artifact:**
+  Formal compliance certification is published at `results/security_audit_report.md`.
 
 
 

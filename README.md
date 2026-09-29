@@ -5,7 +5,7 @@ A research prototype combining classical representation learning, quantum featur
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
 [![PennyLane](https://img.shields.io/badge/PennyLane-0.38%2B-green.svg)](https://pennylane.ai/)
-[![Tests](https://img.shields.io/badge/Tests-8%2F8%20Passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-188%2F188%20Passed-brightgreen.svg)]()
 
 ---
 
@@ -77,7 +77,7 @@ MIndMatrix/
 │   ├── vqc_model.pt              # PyTorch Hybrid VQC model checkpoint
 │   ├── vqc_weights.npy           # Portable numpy array of quantum circuit parameters
 │   └── angle_scaler.json         # Quantized angle scaling bounds
-├── notebooks/                    # Interactive research notebooks
+├── artifacts/                     # Serialized per-experiment run directories
 ├── results/
 │   ├── classical_baselines.csv   # Baseline benchmark metrics
 │   ├── latent_validation.csv     # 16-D latent space validation
@@ -94,7 +94,18 @@ MIndMatrix/
 │       ├── precision_recall_curves.png
 │       └── confusion_matrix_vqc.png
 ├── scripts/
-│   └── run_pipeline.py           # Master CLI runner orchestrating all stages
+│   ├── run_pipeline.py            # Master CLI runner orchestrating all stages
+│   ├── run_preprocessing.py       # Part 2: leakage-safe preprocessing
+│   ├── run_part3.py               # Part 3: classical baselines + PCA/AE reduction
+│   ├── run_part4.py               # Part 4: quantum/classical feature selection
+│   ├── run_part5.py               # Part 5: imbalance handling + QGAN
+│   ├── run_part6.py               # Part 6: variational quantum classifier
+│   ├── run_hybrid_pipeline.py     # Part 7: end-to-end hybrid pipeline
+│   ├── run_explainability.py      # Part 8: SHAP / Grad-CAM explainability
+│   ├── run_comparison.py          # Part 9: classical vs hybrid comparison
+│   ├── run_security_audit.py      # Part 10: privacy & security audit
+│   ├── predict.py                 # Standalone inference CLI
+│   └── benchmark_vqc.py           # VQC execution/gradient benchmark
 ├── src/
 │   ├── data/loader.py            # Data loading, validation, and dataset card generator
 │   ├── preprocessing/pipeline.py # Zero-leakage transformation & stratified splitting
@@ -106,6 +117,7 @@ MIndMatrix/
 │   │   ├── feature_selection.py  # QUBO quantum feature selector & classical comparison
 │   │   └── vqc.py                # 8-qubit VQC circuit, AngleScaler, and PyTorch module
 │   ├── training/train_vqc.py     # Hybrid VQC training loop with adjoint differentiation
+│   ├── inference/predict.py      # Production inference engine (loads serialized artifacts)
 │   └── evaluation/
 │       ├── metrics.py            # Comprehensive evaluation metrics & confusion matrix
 │       ├── ablation.py           # Systematic ablation experiment execution
@@ -114,7 +126,8 @@ MIndMatrix/
 │   ├── test_pipeline.py          # Comprehensive 8-stage boundary and integration tests
 │   ├── test_part7_pipeline.py    # Integration tests for end-to-end hybrid pipeline
 │   ├── test_part8_explainability.py # Unit and integration tests for explainability
-│   └── test_part9_comparison.py  # 18 comprehensive tests for Part 9 comparison suite
+│   ├── test_part9_comparison.py  # 18 comprehensive tests for Part 9 comparison suite
+│   └── test_part10_security.py   # 31 tests for Part 10 privacy & security
 ├── requirements.txt              # Pinned Python package dependencies
 ├── DATASET_CARD.md               # Detailed clinical dataset documentation
 ├── PROJECT_STATUS.md             # Engineering status, diagnosis, and validation logs
@@ -149,7 +162,7 @@ python scripts/run_pipeline.py
   ```
 - **Run Feature Extraction & Latent Validation Pipeline (Part 3):**
   ```bash
-  python scripts/run_feature_extraction.py
+  python scripts/run_part3.py
   ```
 - **Train Classical Baselines:**
   ```bash

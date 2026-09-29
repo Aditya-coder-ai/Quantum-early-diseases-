@@ -24,7 +24,7 @@
       0.02908753575045786,
       0.2424944040119652
     ],
-    "selection_time_s": 0.0951,
+    "selection_time_s": 0.1782,
     "seed": 42,
     "selected_feature_names": [
       "latent_3",
@@ -58,7 +58,7 @@
       0.02908753575045786,
       0.2424944040119652
     ],
-    "selection_time_s": 0.057,
+    "selection_time_s": 0.1044,
     "seed": 42,
     "selected_feature_names": [
       "latent_3",
@@ -96,7 +96,7 @@
       0.02908753575045786,
       0.2424944040119652
     ],
-    "selection_time_s": 0.0598,
+    "selection_time_s": 0.0935,
     "seed": 42,
     "selected_feature_names": [
       "latent_3",
@@ -138,7 +138,7 @@
       0.02908753575045786,
       0.2424944040119652
     ],
-    "selection_time_s": 0.0553,
+    "selection_time_s": 0.0821,
     "seed": 42,
     "selected_feature_names": [
       "latent_2",

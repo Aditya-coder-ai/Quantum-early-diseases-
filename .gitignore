@@ -23,3 +23,11 @@ Thumbs.db
 Desktop.ini
 *.swp
 *.swo
+
+# Logs and Audit Trails
+*.log
+logs/
+
+# Local runner helpers
+powershell.cmd
+powershell.bat

@@ -65,9 +65,9 @@ Specifically:
 
 | model_name | n_features | recall | specificity | f1 | roc_auc | pr_auc | false_negatives | training_time_s | inference_latency_ms |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Test Logistic Regression | 30 | 0.9688 | 1.0 | 0.9841 | 0.9954 | 0.9938 | 1 | 0.0117 | 0.0023 |
-| Test Compact SVM | 8 | 0.9375 | 0.9444 | 0.9231 | 0.9902 | 0.9844 | 2 | 0.0132 | 0.0092 |
-| Test Hybrid VQC | 8 | 0.7188 | 0.963 | 0.807 | 0.9207 | 0.9229 | 9 | 13.8421 | 3.3553 |
+| Test Logistic Regression | 30 | 0.9688 | 1.0 | 0.9841 | 0.9954 | 0.9938 | 1 | 0.0075 | 0.0028 |
+| Test Compact SVM | 8 | 0.9062 | 0.9815 | 0.9355 | 0.9925 | 0.9876 | 3 | 0.0094 | 0.0085 |
+| Test Hybrid VQC | 8 | 0.8438 | 0.8704 | 0.8182 | 0.9543 | 0.9382 | 5 | 14.7041 | 2.1932 |
 
 ---
 
@@ -76,19 +76,19 @@ Specifically:
 | Model | Seeds | Recall (Sens.) | Specificity | F1 Score | PR-AUC | False Negatives |
 | --- | --- | --- | --- | --- | --- | --- |
 | Test Logistic Regression | 1 | 0.9688 ± 0.0000 | 1.0000 ± 0.0000 | 0.9841 ± 0.0000 | 0.9938 ± 0.0000 | 1.0000 ± 0.0000 |
-| Test Compact SVM | 1 | 0.9375 ± 0.0000 | 0.9444 ± 0.0000 | 0.9231 ± 0.0000 | 0.9844 ± 0.0000 | 2.0000 ± 0.0000 |
-| Test Hybrid VQC | 1 | 0.7188 ± 0.0000 | 0.9630 ± 0.0000 | 0.8070 ± 0.0000 | 0.9229 ± 0.0000 | 9.0000 ± 0.0000 |
+| Test Compact SVM | 1 | 0.9062 ± 0.0000 | 0.9815 ± 0.0000 | 0.9355 ± 0.0000 | 0.9876 ± 0.0000 | 3.0000 ± 0.0000 |
+| Test Hybrid VQC | 1 | 0.8438 ± 0.0000 | 0.8704 ± 0.0000 | 0.8182 ± 0.0000 | 0.9382 ± 0.0000 | 5.0000 ± 0.0000 |
 
 ### Paired Significance Tests (Classical SVM vs. Hybrid VQC on Test Set):
 - **Paired t-Test (Probability Residuals):**
-  - t-statistic: `-13.3954`, p-value: `0.000000`
+  - t-statistic: `-6.8434`, p-value: `0.000000`
   - Statistically significant ($p < 0.05$): `True`
 - **Wilcoxon Signed-Rank Test:**
-  - statistic: `89.0`, p-value: `0.000000`
+  - statistic: `247.0`, p-value: `0.000000`
   - Statistically significant ($p < 0.05$): `True`
 - **McNemar's Paired Classification Test:**
-  - Contingency Table: {'both_correct': 75, 'both_wrong': 1, 'Test Logistic Regression_only_correct (b)': 10, 'Test Hybrid VQC_only_correct (c)': 0}
-  - $\chi^2$ statistic: `8.1`, p-value: `0.004427`
+  - Contingency Table: {'both_correct': 74, 'both_wrong': 1, 'Test Logistic Regression_only_correct (b)': 11, 'Test Hybrid VQC_only_correct (c)': 0}
+  - $\chi^2$ statistic: `9.0909`, p-value: `0.002569`
 
 ---
 
@@ -123,9 +123,9 @@ Specifically:
 ---
 
 ## 10. Explainability Comparison (Part 8 Alignment)
-- **Spearman Rank Correlation between Classical & VQC Attributions:** `rho = -0.1429` (p = `0.735765`)
+- **Spearman Rank Correlation between Classical & VQC Attributions:** `rho = 0.0238` (p = `0.955374`)
 - **Top Classical Feature:** `latent_8`
-- **Top Hybrid VQC Feature:** `latent_14`
+- **Top Hybrid VQC Feature:** `latent_0`
 - **Attribution Divergence:** While both models strongly weight `latent_8`, the non-linear quantum circuit distributes boundary decisions differently across secondary features (`latent_3` vs `latent_0`), showing distinct geometric representations.
 
 ---

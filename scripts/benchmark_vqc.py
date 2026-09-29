@@ -2,13 +2,21 @@
 Diagnostic script to benchmark VQC execution and gradient calculation.
 Tests both autograd and PyTorch interfaces, and default.qubit vs lightning.qubit.
 """
+import os
+import sys
 import time
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 import numpy as np
 import torch
 import pennylane as qml
 from configs.config import NUM_QUBITS, VQC_NUM_LAYERS, RANDOM_SEED
 
 print("--- Testing PennyLane Devices & Gradients ---")
+
+np.random.seed(RANDOM_SEED)
+torch.manual_seed(RANDOM_SEED)
 
 # 1. Test device
 device_name = "lightning.qubit"

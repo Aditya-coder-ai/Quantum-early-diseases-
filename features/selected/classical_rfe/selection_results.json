@@ -24,7 +24,7 @@
       10,
       8
     ],
-    "selection_time_s": 0.0475,
+    "selection_time_s": 0.0609,
     "seed": 42,
     "selected_feature_names": [
       "latent_3",
@@ -58,7 +58,7 @@
       8,
       6
     ],
-    "selection_time_s": 0.042,
+    "selection_time_s": 0.0518,
     "seed": 42,
     "selected_feature_names": [
       "latent_3",
@@ -96,7 +96,7 @@
       6,
       4
     ],
-    "selection_time_s": 0.035,
+    "selection_time_s": 0.0498,
     "seed": 42,
     "selected_feature_names": [
       "latent_2",
@@ -138,7 +138,7 @@
       4,
       2
     ],
-    "selection_time_s": 0.0274,
+    "selection_time_s": 0.042,
     "seed": 42,
     "selected_feature_names": [
       "latent_2",

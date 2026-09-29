@@ -18,6 +18,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from configs.config import PROJECT_ROOT
 from src.data.loader import load_dataset
 from src.inference.predict import MedicalInferenceEngine
+from src.security import (
+    AuditLogger,
+    AuditEventType,
+    detect_identifier_columns,
+    strip_identifiers,
+    validate_prediction_input,
+)
 
 
 def resolve_latest_artifact_dir(base_dir: str) -> str:
@@ -76,7 +83,33 @@ def main():
     # Load input from specified CSV file
     print(f"[INFERENCE] Loading input patient data from {args.input}...")
     input_df = pd.read_csv(args.input)
-    res = engine.predict(input_df)
+    
+    # Security & Privacy check: detect and strip direct patient identifiers
+    id_cols = detect_identifier_columns(list(input_df.columns))
+    if id_cols:
+        print(f"[SECURITY WARNING] Patient identifier columns detected and stripped: {id_cols}")
+        clean_df = strip_identifiers(input_df)
+    else:
+        clean_df = input_df.copy()
+
+    # Input validation
+    val_res = validate_prediction_input(clean_df)
+    if not val_res.is_valid:
+        print(f"[SECURITY ERROR] Input validation failed: {val_res.errors}")
+        sys.exit(1)
+    if val_res.warnings:
+        for w in val_res.warnings:
+            print(f"[SECURITY INFO] {w}")
+
+    res = engine.predict(clean_df)
+
+    # Secure audit logging
+    audit = AuditLogger()
+    audit.log_event(
+        event_type=AuditEventType.PREDICTION_REQUEST,
+        success=True,
+        metadata={"samples_count": len(clean_df), "source": os.path.basename(args.input)},
+    )
 
     res_df = input_df.copy()
     res_df["predicted_class"] = res["predicted_classes"]
