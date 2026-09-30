@@ -42,4 +42,4 @@
   - `results/audit_discrepancies.json`
   - `docs/audit_inventory.md`
   - `LOOP_LOG.md`
-- **Commit Hash:** Pending commit `loop(phase0/iter1): reproducibility lock and audit snapshot`
+- **Commit Hash:** `c894c76`
