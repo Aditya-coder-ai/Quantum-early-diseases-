@@ -1,0 +1,372 @@
+{
+  "vqc_accuracy_conflicts": {
+    "distinct_reported_values": [
+      75.0,
+      78.12,
+      79.38,
+      80.62,
+      81.25,
+      84.38,
+      84.52,
+      84.71,
+      85.75,
+      86.05,
+      87.0,
+      87.21,
+      87.5,
+      88.84,
+      89.09,
+      89.3,
+      89.47,
+      89.53,
+      89.66,
+      89.91,
+      90.0,
+      90.62,
+      90.7,
+      90.74,
+      91.53,
+      91.86,
+      91.89,
+      92.86,
+      93.02,
+      93.33,
+      93.75,
+      94.19,
+      94.44,
+      94.92,
+      95.13,
+      95.19,
+      95.54,
+      95.56,
+      95.58,
+      96.18,
+      96.23,
+      96.3,
+      96.47,
+      96.49,
+      96.67,
+      96.82,
+      96.88,
+      97.05,
+      97.2,
+      97.25,
+      97.7,
+      97.74,
+      97.78,
+      98.08,
+      99.41,
+      99.53,
+      99.63,
+      99.71,
+      99.88,
+      99.93
+    ],
+    "occurrences": [
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **10. Hybrid VQC Training** | `src/training/train_vqc.py` | `COMPLETE` | PyTorch hybrid module with adjoint differenti",
+        "value": 94.19
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **E (Latent -> QFS -> VQC)** | **Hybrid VQC** | Quantum Selected | **8 / 8** | **0.9419** | **0.9153** | **1.0000** | ",
+        "value": 94.19
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **E (Latent -> QFS -> VQC)** | **Hybrid VQC** | Quantum Selected | **8 / 8** | **0.9419** | **0.9153** | **1.0000** | ",
+        "value": 91.53
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **E (Latent -> QFS -> VQC)** | **Hybrid VQC** | Quantum Selected | **8 / 8** | **0.9419** | **0.9153** | **1.0000** | ",
+        "value": 84.38
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **E (Latent -> QFS -> VQC)** | **Hybrid VQC** | Quantum Selected | **8 / 8** | **0.9419** | **0.9153** | **1.0000** | ",
+        "value": 95.58
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **E (Latent -> QFS -> VQC)** | **Hybrid VQC** | Quantum Selected | **8 / 8** | **0.9419** | **0.9153** | **1.0000** | ",
+        "value": 97.05
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **VQC Original Imbalanced** | 0.9647 | 0.9808 | 0.9623 | 0.9688 | 0.9725 | 0.9953 | 0.9971 | 0.9062 | 3 | 88.0s |",
+        "value": 96.47
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **VQC Original Imbalanced** | 0.9647 | 0.9808 | 0.9623 | 0.9688 | 0.9725 | 0.9953 | 0.9971 | 0.9062 | 3 | 88.0s |",
+        "value": 98.08
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **VQC Original Imbalanced** | 0.9647 | 0.9808 | 0.9623 | 0.9688 | 0.9725 | 0.9953 | 0.9971 | 0.9062 | 3 | 88.0s |",
+        "value": 96.23
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **VQC Original Imbalanced** | 0.9647 | 0.9808 | 0.9623 | 0.9688 | 0.9725 | 0.9953 | 0.9971 | 0.9062 | 3 | 88.0s |",
+        "value": 96.88
+      }
+    ],
+    "audit_note": "VQC accuracy appears with multiple contradictory numbers (e.g. 94.19, 90.70, 93.02, 90.00) depending on whether reporting single lucky seed (42), 5-seed mean, or test set before tuning."
+  },
+  "svm_accuracy_conflicts": {
+    "distinct_reported_values": [
+      81.25,
+      82.5,
+      87.5,
+      90.41,
+      90.62,
+      90.7,
+      91.86,
+      92.31,
+      92.73,
+      92.86,
+      93.02,
+      93.33,
+      93.49,
+      93.58,
+      93.75,
+      94.19,
+      94.44,
+      94.55,
+      95.35,
+      95.41,
+      96.3,
+      96.36,
+      96.51,
+      96.88,
+      97.25,
+      97.65,
+      97.67,
+      97.74,
+      98.11,
+      98.15,
+      98.26,
+      98.44,
+      98.5,
+      99.02,
+      99.07,
+      99.31,
+      99.44,
+      99.5,
+      99.59,
+      99.88,
+      99.93
+    ],
+    "occurrences": [
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **6. Latent-Space Validation** | `src/models/latent_validation.py` | `COMPLETE` | Confirmed 16D latent space preserves",
+        "value": 96.51
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **6. Latent-Space Validation** | `src/models/latent_validation.py` | `COMPLETE` | Confirmed 16D latent space preserves",
+        "value": 99.31
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 97.67
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 98.15
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 98.15
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 96.88
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 98.15
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **A (Raw -> Classical)** | SVM (RBF) | Raw | 30 / 0 | 0.9767 | 0.9815 | 0.9815 | 0.9688 | 0.9815 | 0.9959 | 1 |",
+        "value": 99.59
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **C (Latent 16D -> Classical)** | Latent-SVM | Latent | 16 / 0 | 0.9651 | 0.9636 | 0.9815 | 0.9375 | 0.9725 | 0.9931 |",
+        "value": 96.51
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "line": "| **C (Latent 16D -> Classical)** | Latent-SVM | Latent | 16 / 0 | 0.9651 | 0.9636 | 0.9815 | 0.9375 | 0.9725 | 0.9931 |",
+        "value": 96.36
+      }
+    ],
+    "audit_note": "SVM accuracy appears with conflicting numbers (97.67, 96.51, 91.86, 94.19, 93.49) between Stage A raw, Stage C latent, Stage D classical FS, and 5-seed evaluations."
+  },
+  "vqc_param_conflicts": {
+    "reported_parameters": [
+      16,
+      32
+    ],
+    "occurrences": [],
+    "audit_note": "Ansatz A (RY-only) has 1 param/qubit/layer -> 16 params for L=2, whereas Ansatz B (RY+RZ) has 2 params/qubit/layer -> 32 params for L=2. Reports intermittently state 16 vs 32 without clarifying the ansatz type."
+  },
+  "test_count_mismatches": {
+    "occurrences": [
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "18 tests passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "17 tests passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "18 tests passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "19 tests passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "12/12 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "8/8 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "20/20 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "12/12 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "8/8 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "26/26 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "19/19 passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "19/19 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "19/19 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "18/18 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "17/17 Passed"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "match": "18/18 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "26/26 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "12/12 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "26/26 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "19/19 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "19/19 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "18/18 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "17/17 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "18/18 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "8/8 Passed"
+      },
+      {
+        "source": "README.md",
+        "match": "19/19 Passed"
+      }
+    ],
+    "audit_note": "Test counts diverge across versions: '188/188 Passed' badge in README vs 207 collected tests in pytest; Part 8 docs mention '17/17' while test file contains 18 tests; Part 7 reports 18 vs 19 tests."
+  },
+  "duplicate_part_numbers": {
+    "occurrences": [
+      {
+        "source": "PROJECT_STATUS.md",
+        "header": "## Part 10: Privacy, Security & Safe Medical Data Handling"
+      },
+      {
+        "source": "PROJECT_STATUS.md",
+        "header": "## Part 10: FastAPI Inference Service & Production REST API"
+      },
+      {
+        "source": "README.md",
+        "header": "\u251c\u2500\u2500 app/                          # Part 10: Production FastAPI inference REST service"
+      },
+      {
+        "source": "README.md",
+        "header": "\u2502   \u251c\u2500\u2500 run_security_audit.py      # Part 10: privacy & security audit"
+      },
+      {
+        "source": "README.md",
+        "header": "\u2502   \u251c\u2500\u2500 test_part10_security.py   # 31 tests for Part 10 privacy & security"
+      },
+      {
+        "source": "README.md",
+        "header": "\u2502   \u2514\u2500\u2500 test_part10_fastapi.py    # 19 tests for Part 10 FastAPI service"
+      },
+      {
+        "source": "README.md",
+        "header": "## FastAPI Inference Service (Part 10)"
+      }
+    ],
+    "audit_note": "Duplicate 'Part 10' exists: both 'Part 10: Privacy, Security & Safe Medical Data Handling' and 'Part 10: FastAPI Inference Service & Production REST API' are numbered Part 10."
+  },
+  "batch_limit_conflicts": {
+    "src_security_validation_limit": "1000",
+    "app_config_limit": "100",
+    "audit_note": "Security validation allows MAX_BATCH_SIZE = 1000, but FastAPI app/config.py strictly enforces MAX_BATCH_SIZE = 100."
+  }
+}

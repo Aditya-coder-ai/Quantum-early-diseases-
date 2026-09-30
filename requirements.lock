@@ -1,0 +1,23 @@
+# Pinned dependencies generated via pip freeze on Windows 11 (Python 3.14.6)
+# Core Quantum ML & Scientific Stack
+numpy==2.4.6
+scipy==1.18.0
+scikit-learn==1.9.0
+torch==2.13.0+cpu
+pennylane==0.45.1
+pennylane-lightning==0.45.0
+shap==0.52.0
+pandas==3.0.6
+matplotlib==3.11.1
+seaborn==0.13.2
+joblib==1.5.3
+pytest==9.1.1
+pytest-asyncio==1.4.0
+fastapi==0.139.0
+uvicorn==0.51.0
+pydantic==2.13.4
+pydantic-settings==2.15.0
+httpx==0.28.1
+psutil==7.2.2
+PyYAML==6.0.3
+safetensors==0.8.0
